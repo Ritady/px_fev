@@ -1,0 +1,263 @@
+﻿###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.40.1.212/W32 for ARM         24/Jan/2022  17:00:04
+# Copyright 1999-2019 IAR Systems AB.
+#
+#    Cpu mode     =  
+#    Endian       =  little
+#    Source file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\device_register.c
+#        [UTF-8]
+#    Command line =
+#        -f C:\Users\Answer\AppData\Local\Temp\EW3032.tmp
+#        (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\device_register.c
+#        -lC
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst
+#        --diag_suppress Pa050 -o
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M33.no_dsp --cmse --no_path_in_file_macros
+#        --separate_cluster_for_initialized_variables -e --fpu=VFPv5_sp
+#        --dlib_config D:\IAR_FOR_ARM\arm\inc\c\DLib_Config_Normal.h -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\common\include\
+#        -On --use_c++_inline --source_encoding utf8 --text_out utf8
+#        --utf8_text_in)
+#    Locale       =  C
+#    List file    =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst\device_register.lst
+#    Object file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj\device_register.o
+#
+###############################################################################
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\device_register.c
+      1          /*
+      2           * @file: device_register.c
+      3           * @brief: 
+      4           * @author: Arien
+      5           * @date: 2021-08-31 18:00:00
+      6           * @email: Arien.ye@tuya.com
+      7           * @copyright: HANGZHOU TUYA INFORMATION TECHNOLOGY CO.,LTD
+      8           * @company: http://www.tuya.com
+      9           */
+     10          #include "device_register.h"
+     11          
+     12          /* zigbee endpoint register */
+     13          // application attribute
+
+   \                                 In section .rodata, align 4
+     14          const attr_t ias_zone_attr_list[] = {
+   \                     ias_zone_attr_list:
+   \        0x0   0x0000             DC16 0
+   \        0x2   0x30 0x01          DC8 48, 1, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \        0x8   0x0000'0000        DC32 0x0
+   \        0xC   0x0001             DC16 1
+   \        0xE   0x31 0x02          DC8 49, 2, 2, 0, 0, 0
+   \              0x02 0x00    
+   \              0x00 0x00    
+   \       0x14   0x0000'0028        DC32 0x28
+   \       0x18   0x0002             DC16 2
+   \       0x1A   0x19 0x02          DC8 25, 2, 2, 0, 0, 0
+   \              0x02 0x00    
+   \              0x00 0x00    
+   \       0x20   0x0000'0000        DC32 0x0
+   \       0x24   0x0010             DC16 16
+   \       0x26   0xF0 0x08          DC8 240, 8, 3, 0, 0, 0
+   \              0x03 0x00    
+   \              0x00 0x00    
+   \       0x2C   0x0000'0000        DC32 0x0
+   \       0x30   0x0011             DC16 17
+   \       0x32   0x20 0x01          DC8 32, 1, 2, 0, 0, 0
+   \              0x02 0x00    
+   \              0x00 0x00    
+   \       0x38   0x0000'00FF        DC32 0xff
+   \       0x3C   0xFFFD             DC16 65'533
+   \       0x3E   0x21 0x02          DC8 33, 2, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \       0x44   0x0000'0001        DC32 0x1
+     15              IAS_ZONE_ATTR_LIST1
+     16          };
+     17          // power attribute
+
+   \                                 In section .rodata, align 4
+     18          const attr_t power_attr_list[] = {
+   \                     power_attr_list:
+   \        0x0   0x0000             DC16 0
+   \        0x2   0x21 0x02          DC8 33, 2, 32, 0, 0, 0
+   \              0x20 0x00    
+   \              0x00 0x00    
+   \        0x8   0x0000'0000        DC32 0x0
+   \        0xC   0x0020             DC16 32
+   \        0xE   0x20 0x01          DC8 32, 1, 32, 0, 0, 0
+   \              0x20 0x00    
+   \              0x00 0x00    
+   \       0x14   0x0000'0000        DC32 0x0
+   \       0x18   0x0021             DC16 33
+   \       0x1A   0x20 0x01          DC8 32, 1, 32, 0, 0, 0
+   \              0x20 0x00    
+   \              0x00 0x00    
+   \       0x20   0x0000'0000        DC32 0x0
+   \       0x24   0xFFFD             DC16 65'533
+   \       0x26   0x21 0x02          DC8 33, 2, 32, 0, 0, 0
+   \              0x20 0x00    
+   \              0x00 0x00    
+   \       0x2C   0x0000'0001        DC32 0x1
+     19              POWER_ATTR_LIST1
+     20          };
+     21          // application cluster
+
+   \                                 In section .rodata, align 4
+     22          const cluster_t app_server_cluster_list[] = {
+   \                     app_server_cluster_list:
+   \        0x0   0x0001             DC16 1
+   \        0x2   0x00 0x00          DC8 0, 0
+   \        0x4   0x....'....        DC32 power_attr_list
+   \        0x8   0x04 0x00          DC8 4, 0, 0, 0
+   \              0x00 0x00    
+   \        0xC   0x0500             DC16 1'280
+   \        0xE   0x00 0x00          DC8 0, 0
+   \       0x10   0x....'....        DC32 ias_zone_attr_list
+   \       0x14   0x06 0x00          DC8 6, 0, 0, 0
+   \              0x00 0x00    
+     23              DEF_CLUSTER_POWER_CLUSTER_ID1(power_attr_list)
+     24              DEF_CLUSTER_IAS_ZONE_CLUSTER_ID1(ias_zone_attr_list)
+     25          };
+     26          // application device description
+
+   \                                 In section .rodata, align 4
+     27          const dev_description_t zig_dev_desc_model[] = {
+   \                     zig_dev_desc_model:
+   \        0x0   0x01 0x00          DC8 1, 0
+   \        0x2   0x0104 0x0402      DC16 260, 1'026
+   \        0x6   0x02 0x00          DC8 2, 0
+   \        0x8   0x....'....        DC32 app_server_cluster_list
+   \        0xC   0x00 0x00          DC8 0, 0, 0, 0
+   \              0x00 0x00    
+   \       0x10   0x0000'0000        DC32 0x0
+     28              ZIG_DEV_DESC_MODEL(app_server_cluster_list)
+     29          };
+     30          
+     31          
+     32          /* zigbee sleep device register */
+
+   \                                 In section .rodata, align 4
+     33          const zg_dev_config_t st_zg_dev_config = {
+   \                     st_zg_dev_config:
+   \        0x0   0x02 0x00          DC8 2, 0, 0, 0
+   \              0x00 0x00    
+   \        0x4   0x03E8 0x0FA0      DC16 1'000, 4'000
+   \        0x8   0x00 0x00          DC8 0, 0
+   \        0xA   0x0006             DC16 6
+   \        0xC   0x00DB'BA00        DC32 14'400'000, 25'000, 4'000
+   \              0x0000'61A8  
+   \              0x0000'0FA0  
+   \       0x18   0x04 0x01          DC8 4, 1, 1, 0
+   \              0x01 0x00    
+   \       0x1C   0x012C 0x03E8      DC16 300, 1'000
+   \       0x20   0x03 0x00          DC8 3, 0, 0, 0
+   \              0x00 0x00    
+     34              .dev_type = ZG_SLEEPY_END_DEVICE,
+     35              .config.sleep_dev_cfg.poll_conifg.poll_interval = POLL_INTERVAL_MS,
+     36              .config.sleep_dev_cfg.poll_conifg.wait_app_ack_time = WAIT_APP_ACK_MS,
+     37              .config.sleep_dev_cfg.poll_conifg.poll_forever_flag = POLL_FOREVER,
+     38              .config.sleep_dev_cfg.poll_conifg.poll_failed_times = POLL_MISS_MAX,
+     39              .config.sleep_dev_cfg.rejoin_config.next_rejoin_time = NEXT_REJOIN_PER_HOUR * 60 * 60 * 1000,
+     40              .config.sleep_dev_cfg.rejoin_config.wake_up_time_after_join = JOINED_CONTINUE_POLL_TIME_MS,
+     41              .config.sleep_dev_cfg.rejoin_config.wake_up_time_after_rejoin = REJOINED_CONTINUE_POLL_TIME_MS,
+     42              .config.sleep_dev_cfg.rejoin_config.rejoin_try_times = BEACON_TIME,
+     43              .config.sleep_dev_cfg.rejoin_config.power_on_auto_rejoin_flag = POWER_ON_REJOIN,
+     44              .config.sleep_dev_cfg.rejoin_config.auto_rejoin_send_data= AUTO_REJOIN_POLL,
+     45              .beacon_send_interval_for_join = CHANNEL_SW_PER_MS,
+     46              .beacon_send_interval_for_rejoin = BEACON_PER_MS,
+     47              .zb_scan_duration = ZB_SCAN_DURATION_3
+     48          };
+     49          
+     50          /* zigbee join register */
+
+   \                                 In section .rodata, align 4
+     51          const join_config_t st_join_config = {
+   \                     st_join_config:
+   \        0x0   0x00 0x01          DC8 0, 1, 0, 0
+   \              0x00 0x00    
+   \        0x4   0x0000'7530        DC32 30'000
+     52              .auto_join_power_on_flag = POWER_ON_JOIN,
+     53              .auto_join_remote_leave_flag = RM_LEAVE_JOIN,
+     54              .join_timeout= JOIN_TIME_OUT_MS
+     55          };
+     56          
+     57          
+     58          /**
+     59           * @description: zigbee device init
+     60           * @param {type} none
+     61           * @return: none
+     62           */
+
+   \                                 In section .text, align 4, keep-with-next
+     63          void zg_dev_init(void)
+     64          {
+   \                     zg_dev_init: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     65              // zigbee endpoint register
+     66              dev_register_zg_ep_infor((dev_description_t *)zig_dev_desc_model, DEV_EP_SUM);
+   \        0x2   0x2101             MOVS     R1,#+1
+   \        0x4   0x4804             LDR.N    R0,??zg_dev_init_0
+   \        0x6   0x....'....        BL       dev_register_zg_ep_infor
+     67          
+     68              // device information register
+     69              dev_register_zg_dev_config((zg_dev_config_t *)&st_zg_dev_config);
+   \        0xA   0x4804             LDR.N    R0,??zg_dev_init_0+0x4
+   \        0xC   0x....'....        BL       dev_register_zg_dev_config
+     70             
+     71              // join information register
+     72              dev_zg_join_config((join_config_t *)&st_join_config);
+   \       0x10   0x4803             LDR.N    R0,??zg_dev_init_0+0x8
+   \       0x12   0x....'....        BL       dev_zg_join_config
+     73          }
+   \       0x16   0xBD01             POP      {R0,PC}          ;; return
+   \                     ??zg_dev_init_0:
+   \       0x18   0x....'....        DC32     zig_dev_desc_model
+   \       0x1C   0x....'....        DC32     st_zg_dev_config
+   \       0x20   0x....'....        DC32     st_join_config
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   zg_dev_init
+         8   -> dev_register_zg_dev_config
+         8   -> dev_register_zg_ep_infor
+         8   -> dev_zg_join_config
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      24  app_server_cluster_list
+      72  ias_zone_attr_list
+      48  power_attr_list
+       8  st_join_config
+      36  st_zg_dev_config
+      36  zg_dev_init
+      20  zig_dev_desc_model
+
+ 
+ 208 bytes in section .rodata
+  36 bytes in section .text
+ 
+  36 bytes of CODE  memory
+ 208 bytes of CONST memory
+
+Errors: none
+Warnings: none

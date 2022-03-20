@@ -1,0 +1,151 @@
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>setlocal enableextensions enabledelayedexpansion 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET allParams='D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route' 'D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768' 'D:\IAR_FOR_ARM\arm' 'D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768' 'D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe' 'EFR32MG21A020F768' 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET params='D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route","D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768","D:\IAR_FOR_ARM\arm","D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768","D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe","EFR32MG21A020F768' 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET params="D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route","D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768","D:\IAR_FOR_ARM\arm","D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768","D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe","EFR32MG21A020F768" 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>set /a count=0 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>for %i in ("D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route" "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768" "D:\IAR_FOR_ARM\arm" "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768" "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe" "EFR32MG21A020F768") do (
+set /a count+=1  
+ set param[!count!]=%i 
+) 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>(
+set /a count+=1  
+ set param[!count!]="D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route" 
+) 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>(
+set /a count+=1  
+ set param[!count!]="D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768" 
+) 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>(
+set /a count+=1  
+ set param[!count!]="D:\IAR_FOR_ARM\arm" 
+) 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>(
+set /a count+=1  
+ set param[!count!]="D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768" 
+) 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>(
+set /a count+=1  
+ set param[!count!]="D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe" 
+) 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>(
+set /a count+=1  
+ set param[!count!]="EFR32MG21A020F768" 
+) 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET IAR_PROJECT_DIR=D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET targetdir=D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET chip=EFR32MG21A020F768 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>set /P STR_VER= 0<D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\firmware_ver_temp_file 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>set /P NAME= 0<D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\firmware_name_temp_file 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>for /F "delims=. tokens=1" %i in ("1.0.0") do SET V1=%i 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET V1=1 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>for /F "delims=. tokens=2" %j in ("1.0.0") do SET V2=%j 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET V2=0 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>for /F "delims=. tokens=3" %k in ("1.0.0") do SET V3=%k 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET V3=0 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>SET /a var = 1*64+0*16+0 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>set code=0123456789ABCDEF 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>set /a tra=64 % 16 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>call set tra=%code:~0,1% 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>set /a var/=16 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>call set var=%code:~4,1% 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>set HEX_VER=40 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\ielftool.exe "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.out" --srec --srec-s3only "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.s37" 
+
+   IAR ELF Tool V10.2.6.201 [BUILT at IAR]
+   Copyright 2007-2018 IAR Systems AB.
+
+Loading D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.out
+Saving srec file to D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.s37
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>if EFR32MG21A020F768 == EFR32MG13P732F512 (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\commander.exe gbl create "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.gbl" --app "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.s37" --device EFR32MG21A020F768 )  else (
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\commander.exe convert "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.s37" --secureboot --keyfile D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\signing-key --outfile "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route_security.s37"  
+ D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\commander.exe gbl create "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.gbl" --app "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route_security.s37" --sign D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\signing-key --encrypt D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\encryption-key --device EFR32MG21A020F768 
+) 
+Parsing file D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.s37...
+Image SHA256: 95ef6fc16fc8146a6c2b2ea4bfc10153dbeeaff6992711ebb8d6487c4ebea52d
+R = 19648CE5D4929522B19F610CDD3A8676E3B412E6B5C93AF6C0DCD0867C16FD68
+S = 90D67B0AF076123FEBA26A8BA5AEC4720236DEF24ADED8DC1A15CC5DA1D7049C
+Writing to D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route_security.s37...
+DONE
+Parsing file D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route_security.s37...
+Initializing GBL file...
+Adding application to GBL...
+Encrypting GBL...
+Signing GBL...
+Image SHA256: 5bc2b53fb4f3b7cf6e96d2a4baa2ee8e176900d51196724bb6e2240c03e86c09
+R = FD238BD9369CEC1F53B277EA705E7EEF8467EE032F56C5FA76BD97BC135F5B45
+S = 43076B611E59AE910E68BE8C6164192C0EDBC6FAC21968F300C21C70E9FADDA1
+Writing GBL file D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.gbl...
+DONE
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\image-builder-windows.exe --create "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.ota" --version 0x40 --manuf-id 0x1002 --image-type 0x1602 --tag-id 0x0000 --tag-file "D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.gbl" --string "EBL sdk_route" 
+image-builder Copyright 2013 Silicon Laboratories, Inc.
+Version: 1.5.1
+ECC signature support NOT present.
+
+EBL file integrity 'sdk_route.gbl': OK (v3 format)
+
+File: D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe/sdk_route.ota
+Magic Number:         0x0BEEF11E
+Header Version:       0x0100
+Header Length:        56 bytes
+Field Control:        0x0000
+Manufacturer ID:      0x1002
+Image Type:           0x1602
+Firmware Version:     0x00000040
+Stack Version:        0x0002
+Header String:        EBL sdk_route
+Total Image Size:     226010 bytes
+Total Tags:           1
+  ID:                 0x0000   (Upgrade Image)
+  Length:             225948 bytes
+
+
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>if EFR32MG21A020F768 == EFR32MG13P732F512 (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\commander.exe convert D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\EFR32MG21A020F768_bootloader.s37 D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route.s37 --address 0x0 --outfile D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\simple_contact_sensor_QIO_1.0.0.s37 )  else (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\commander.exe convert D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\EFR32MG21A020F768_bootloader.s37 D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route_security.s37 --address 0x0 --outfile D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\simple_contact_sensor_QIO_1.0.0.s37 ) 
+Parsing file D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\tools\iar_tools\EFR32MG21A020F768_bootloader.s37...
+Parsing file D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route_security.s37...
+Writing to D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\simple_contact_sensor_QIO_1.0.0.s37...
+DONE
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>copy D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route.ota D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\simple_contact_sensor_OTA_1.0.0.bin 
+已复制         1 个文件。
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>DEL D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\firmware_ver_temp_file 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>DEL D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\firmware_name_temp_file 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>DEL D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\config.mk 
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768>DEL D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\package.json 

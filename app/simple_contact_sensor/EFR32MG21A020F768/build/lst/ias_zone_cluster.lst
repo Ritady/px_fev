@@ -1,0 +1,1298 @@
+﻿###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.40.1.212/W32 for ARM         24/Jan/2022  17:00:04
+# Copyright 1999-2019 IAR Systems AB.
+#
+#    Cpu mode     =  
+#    Endian       =  little
+#    Source file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ias_zone_cluster.c
+#        [UTF-8]
+#    Command line =
+#        -f C:\Users\Answer\AppData\Local\Temp\EW3031.tmp
+#        (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ias_zone_cluster.c
+#        -lC
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst
+#        --diag_suppress Pa050 -o
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M33.no_dsp --cmse --no_path_in_file_macros
+#        --separate_cluster_for_initialized_variables -e --fpu=VFPv5_sp
+#        --dlib_config D:\IAR_FOR_ARM\arm\inc\c\DLib_Config_Normal.h -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\common\include\
+#        -On --use_c++_inline --source_encoding utf8 --text_out utf8
+#        --utf8_text_in)
+#    Locale       =  C
+#    List file    =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst\ias_zone_cluster.lst
+#    Object file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj\ias_zone_cluster.o
+#
+###############################################################################
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ias_zone_cluster.c
+      1          /*
+      2           * @file: ias_zone_cluster.c
+      3           * @brief: 
+      4           * @author: Arien
+      5           * @date: 2021-08-31 18:00:00
+      6           * @email: Arien.ye@tuya.com
+      7           * @copyright: HANGZHOU TUYA INFORMATION TECHNOLOGY CO.,LTD
+      8           * @company: http://www.tuya.com
+      9           */
+     10          #include "stdio.h"
+     11          #include "stdlib.h"
+     12          #include "config.h"
+     13          #include "app_common.h"
+     14          #include "ias_zone_cluster.h"
+     15          
+     16          // ias zone status union 
+
+   \                                 In section .bss, align 2
+     17          ias_zone_status ias_zone_status_bits;
+   \                     ias_zone_status_bits:
+   \        0x0                      DS8 2
+     18          
+     19          
+     20          /**
+     21           * @description: ias zone info init
+     22           * @param {in} ep: endpoind
+     23           * @param {in} zone_type: ias zone type
+     24           * @return: none
+     25           */
+
+   \                                 In section .text, align 2, keep-with-next
+     26          void ias_zone_info_init(uint8_t ep, uint16_t zone_type)
+     27          {
+   \                     ias_zone_info_init: (+1)
+   \        0x0   0xB513             PUSH     {R0,R1,R4,LR}
+   \        0x2   0xB082             SUB      SP,SP,#+8
+   \        0x4   0x0004             MOVS     R4,R0
+     28              uint16_t ias_zone_status = 0;
+   \        0x6   0x2000             MOVS     R0,#+0
+   \        0x8   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+     29              // write ias zone type
+     30              dev_zigbee_write_attribute(
+     31                  ep,
+     32                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+     33                  ATTR_ZONE_TYPE_ATTRIBUTE_ID,
+     34                  &zone_type,
+     35                  ATTR_ENUM16_ATTRIBUTE_TYPE
+     36              );
+   \        0xC   0x2031             MOVS     R0,#+49
+   \        0xE   0x9000             STR      R0,[SP, #+0]
+   \       0x10   0xAB03             ADD      R3,SP,#+12
+   \       0x12   0x2201             MOVS     R2,#+1
+   \       0x14   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x18   0x0020             MOVS     R0,R4
+   \       0x1A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x1C   0x....'....        BL       dev_zigbee_write_attribute
+     37          
+     38              //write ias zone status
+     39              dev_zigbee_write_attribute(
+     40                  ep,
+     41                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+     42                  ATTR_ZONE_STATUS_ATTRIBUTE_ID,
+     43                  &ias_zone_status,
+     44                  ATTR_BITMAP16_ATTRIBUTE_TYPE
+     45              );
+   \       0x20   0x2019             MOVS     R0,#+25
+   \       0x22   0x9000             STR      R0,[SP, #+0]
+   \       0x24   0xAB01             ADD      R3,SP,#+4
+   \       0x26   0x2202             MOVS     R2,#+2
+   \       0x28   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x2C   0x0020             MOVS     R0,R4
+   \       0x2E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x30   0x....'....        BL       dev_zigbee_write_attribute
+     46          }
+   \       0x34   0xBD1F             POP      {R0-R4,PC}       ;; return
+     47          
+     48          /**
+     49           * @description: ias zone alarm1 gpio interrupt
+     50           * @param {type} none
+     51           * @return: none
+     52           */
+
+   \                                 In section .text, align 2, keep-with-next
+     53          void gpio_sensor_alarm1_interrupt_handler(GPIO_PORT_T port, GPIO_PIN_T pin)
+     54          {
+   \                     gpio_sensor_alarm1_interrupt_handler: (+1)
+   \        0x0   0xB5F8             PUSH     {R3-R7,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+   \        0x4   0x000D             MOVS     R5,R1
+     55              uint8_t alarm1_value;
+     56              alarm1_value = gpio_raw_input_read_status(alarm_info.sensor_io_st.port, alarm_info.sensor_io_st.pin);
+   \        0x6   0x....'....        LDR.W    R7,??DataTable5
+   \        0xA   0x7979             LDRB     R1,[R7, #+5]
+   \        0xC   0x7938             LDRB     R0,[R7, #+4]
+   \        0xE   0x....'....        BL       gpio_raw_input_read_status
+   \       0x12   0x0006             MOVS     R6,R0
+     57              if(alarm_info.gpio_polarity == alarm1_value) {
+   \       0x14   0x78F8             LDRB     R0,[R7, #+3]
+   \       0x16   0x0031             MOVS     R1,R6
+   \       0x18   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \       0x1A   0x4288             CMP      R0,R1
+   \       0x1C   0xD10F             BNE.N    ??gpio_sensor_alarm1_interrupt_handler_0
+     58                  if(GPIO_SENSOR_ACTIVE == (GPIO_STATE_T)alarm_info.last_status) {
+   \       0x1E   0x78B8             LDRB     R0,[R7, #+2]
+   \       0x20   0x2801             CMP      R0,#+1
+   \       0x22   0xD103             BNE.N    ??gpio_sensor_alarm1_interrupt_handler_1
+     59                      dev_timer_stop(GPIO_ALARM1_DEBOUNCE_EVT_ID);
+   \       0x24   0x202A             MOVS     R0,#+42
+   \       0x26   0x....'....        BL       dev_timer_stop
+     60                      return ;
+   \       0x2A   0xE017             B.N      ??gpio_sensor_alarm1_interrupt_handler_2
+     61                  }
+     62                  alarm_info.new_status = (DEV_IO_ST_T)GPIO_SENSOR_ACTIVE;
+   \                     ??gpio_sensor_alarm1_interrupt_handler_1: (+1)
+   \       0x2C   0x2001             MOVS     R0,#+1
+   \       0x2E   0x7078             STRB     R0,[R7, #+1]
+     63                  dev_timer_start_with_callback(GPIO_ALARM1_DEBOUNCE_EVT_ID, ALARM1_VIBRATE_TIME, gpio_sensor_debounce_handler);
+   \       0x30   0x....'....        LDR.W    R2,??DataTable5_1
+   \       0x34   0x21C8             MOVS     R1,#+200
+   \       0x36   0x202A             MOVS     R0,#+42
+   \       0x38   0x....'....        BL       dev_timer_start_with_callback
+   \       0x3C   0xE00E             B.N      ??gpio_sensor_alarm1_interrupt_handler_3
+     64              } else {
+     65                  if(GPIO_SENSOR_INACTIVE == (GPIO_STATE_T)alarm_info.last_status) {
+   \                     ??gpio_sensor_alarm1_interrupt_handler_0: (+1)
+   \       0x3E   0x78B8             LDRB     R0,[R7, #+2]
+   \       0x40   0x2800             CMP      R0,#+0
+   \       0x42   0xD103             BNE.N    ??gpio_sensor_alarm1_interrupt_handler_4
+     66                      dev_timer_stop(GPIO_ALARM1_DEBOUNCE_EVT_ID);
+   \       0x44   0x202A             MOVS     R0,#+42
+   \       0x46   0x....'....        BL       dev_timer_stop
+     67                      return ;
+   \       0x4A   0xE007             B.N      ??gpio_sensor_alarm1_interrupt_handler_2
+     68                  }
+     69                  alarm_info.new_status = (DEV_IO_ST_T)GPIO_SENSOR_INACTIVE;
+   \                     ??gpio_sensor_alarm1_interrupt_handler_4: (+1)
+   \       0x4C   0x2000             MOVS     R0,#+0
+   \       0x4E   0x7078             STRB     R0,[R7, #+1]
+     70                  dev_timer_start_with_callback(GPIO_ALARM1_DEBOUNCE_EVT_ID, ALARM1_VIBRATE_TIME, gpio_sensor_debounce_handler);
+   \       0x50   0x....'....        LDR.W    R2,??DataTable5_1
+   \       0x54   0x21C8             MOVS     R1,#+200
+   \       0x56   0x202A             MOVS     R0,#+42
+   \       0x58   0x....'....        BL       dev_timer_start_with_callback
+     71              }
+     72          }
+   \                     ??gpio_sensor_alarm1_interrupt_handler_3: (+1)
+   \                     ??gpio_sensor_alarm1_interrupt_handler_2: (+1)
+   \       0x5C   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+     73          
+     74          /**
+     75           * @description: ias zone tamper gpio interrupt
+     76           * @param {type} none
+     77           * @return: none
+     78           */
+
+   \                                 In section .text, align 2, keep-with-next
+     79          void gpio_sensor_tamper_interrupt_handler(GPIO_PORT_T port, GPIO_PIN_T pin)
+     80          {
+   \                     gpio_sensor_tamper_interrupt_handler: (+1)
+   \        0x0   0xB5F8             PUSH     {R3-R7,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+   \        0x4   0x000D             MOVS     R5,R1
+     81              uint8_t tamper_value;
+     82              tamper_value = gpio_raw_input_read_status(tamper_info.sensor_io_st.port, tamper_info.sensor_io_st.pin);
+   \        0x6   0x....'....        LDR.W    R7,??DataTable5_2
+   \        0xA   0x7979             LDRB     R1,[R7, #+5]
+   \        0xC   0x7938             LDRB     R0,[R7, #+4]
+   \        0xE   0x....'....        BL       gpio_raw_input_read_status
+   \       0x12   0x0006             MOVS     R6,R0
+     83              if(tamper_info.gpio_polarity == tamper_value) {
+   \       0x14   0x78F8             LDRB     R0,[R7, #+3]
+   \       0x16   0x0031             MOVS     R1,R6
+   \       0x18   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \       0x1A   0x4288             CMP      R0,R1
+   \       0x1C   0xD10F             BNE.N    ??gpio_sensor_tamper_interrupt_handler_0
+     84                  if(GPIO_SENSOR_ACTIVE == (GPIO_STATE_T)tamper_info.last_status) {
+   \       0x1E   0x78B8             LDRB     R0,[R7, #+2]
+   \       0x20   0x2801             CMP      R0,#+1
+   \       0x22   0xD103             BNE.N    ??gpio_sensor_tamper_interrupt_handler_1
+     85                      dev_timer_stop(GPIO_TAMPER_DEBOUNCE_EVT_ID);
+   \       0x24   0x2029             MOVS     R0,#+41
+   \       0x26   0x....'....        BL       dev_timer_stop
+     86                      return ;
+   \       0x2A   0xE017             B.N      ??gpio_sensor_tamper_interrupt_handler_2
+     87                  }
+     88                  tamper_info.new_status = (DEV_IO_ST_T)GPIO_SENSOR_ACTIVE;
+   \                     ??gpio_sensor_tamper_interrupt_handler_1: (+1)
+   \       0x2C   0x2001             MOVS     R0,#+1
+   \       0x2E   0x7078             STRB     R0,[R7, #+1]
+     89                  dev_timer_start_with_callback(GPIO_TAMPER_DEBOUNCE_EVT_ID, TAMPER_VIBRATE_TIME, gpio_sensor_debounce_handler);
+   \       0x30   0x....'....        LDR.W    R2,??DataTable5_1
+   \       0x34   0x21C8             MOVS     R1,#+200
+   \       0x36   0x2029             MOVS     R0,#+41
+   \       0x38   0x....'....        BL       dev_timer_start_with_callback
+   \       0x3C   0xE00E             B.N      ??gpio_sensor_tamper_interrupt_handler_3
+     90              } else {
+     91                  if(GPIO_SENSOR_INACTIVE == (GPIO_STATE_T)tamper_info.last_status) {
+   \                     ??gpio_sensor_tamper_interrupt_handler_0: (+1)
+   \       0x3E   0x78B8             LDRB     R0,[R7, #+2]
+   \       0x40   0x2800             CMP      R0,#+0
+   \       0x42   0xD103             BNE.N    ??gpio_sensor_tamper_interrupt_handler_4
+     92                      dev_timer_stop(GPIO_TAMPER_DEBOUNCE_EVT_ID);
+   \       0x44   0x2029             MOVS     R0,#+41
+   \       0x46   0x....'....        BL       dev_timer_stop
+     93                      return ;
+   \       0x4A   0xE007             B.N      ??gpio_sensor_tamper_interrupt_handler_2
+     94                  }
+     95                  tamper_info.new_status = (DEV_IO_ST_T)GPIO_SENSOR_INACTIVE;
+   \                     ??gpio_sensor_tamper_interrupt_handler_4: (+1)
+   \       0x4C   0x2000             MOVS     R0,#+0
+   \       0x4E   0x7078             STRB     R0,[R7, #+1]
+     96                  dev_timer_start_with_callback(GPIO_TAMPER_DEBOUNCE_EVT_ID, TAMPER_VIBRATE_TIME, gpio_sensor_debounce_handler);
+   \       0x50   0x....'....        LDR.W    R2,??DataTable5_1
+   \       0x54   0x21C8             MOVS     R1,#+200
+   \       0x56   0x2029             MOVS     R0,#+41
+   \       0x58   0x....'....        BL       dev_timer_start_with_callback
+     97              }
+     98          }
+   \                     ??gpio_sensor_tamper_interrupt_handler_3: (+1)
+   \                     ??gpio_sensor_tamper_interrupt_handler_2: (+1)
+   \       0x5C   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+     99          
+    100          /**
+    101           * @description: updata ias zone status
+    102           * @param {type} none
+    103           * @return: none
+    104           */
+
+   \                                 In section .text, align 2, keep-with-next
+    105          void ias_zone_status_update(void)
+    106          {
+   \                     ias_zone_status_update: (+1)
+   \        0x0   0xE92D 0x43F0      PUSH     {R4-R9,LR}
+   \        0x4   0xB09D             SUB      SP,SP,#+116
+    107              // update status only if conditions are met
+    108              if(ias_zone_status_pre_update_callback(ias_zone_status_bits.ias_zone_status)) {
+   \        0x6   0x....'....        LDR.W    R4,??DataTable5_3
+   \        0xA   0x8820             LDRH     R0,[R4, #+0]
+   \        0xC   0x....'....        BL       ias_zone_status_pre_update_callback
+   \       0x10   0x2800             CMP      R0,#+0
+   \       0x12   0xD072             BEQ.N    ??ias_zone_status_update_0
+    109                  NET_EVT_T nwk_status = nwk_state_get();
+   \       0x14   0x....'....        BL       nwk_state_get
+   \       0x18   0x0005             MOVS     R5,R0
+    110                  tuya_print("ias_zone_status_update %d\r\n", ias_zone_status_bits.ias_zone_status);
+   \       0x1A   0x8822             LDRH     R2,[R4, #+0]
+   \       0x1C   0x....             LDR.N    R1,??DataTable5_4
+   \       0x1E   0x2000             MOVS     R0,#+0
+   \       0x20   0x....'....        BL       uart_printf
+    111                  /* send enroll request only nwk up  */
+    112                  if((nwk_status == NET_JOIN_OK) || (nwk_status == NET_REJOIN_OK)) {
+   \       0x24   0x0028             MOVS     R0,R5
+   \       0x26   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x28   0x2805             CMP      R0,#+5
+   \       0x2A   0xD003             BEQ.N    ??ias_zone_status_update_1
+   \       0x2C   0x0028             MOVS     R0,R5
+   \       0x2E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x30   0x2807             CMP      R0,#+7
+   \       0x32   0xD106             BNE.N    ??ias_zone_status_update_2
+    113                      if (get_ias_zone_enroll_state(IAS_ZONE_ENDPOINT) == IAS_ZONE_STATE_NOT_ENROLLED) {
+   \                     ??ias_zone_status_update_1: (+1)
+   \       0x34   0x2001             MOVS     R0,#+1
+   \       0x36   0x....'....        BL       get_ias_zone_enroll_state
+   \       0x3A   0x2800             CMP      R0,#+0
+   \       0x3C   0xD101             BNE.N    ??ias_zone_status_update_2
+    114                          zig_ias_enroll_request_with_client();
+   \       0x3E   0x....'....        BL       zig_ias_enroll_request_with_client
+    115                      }
+    116                  }
+    117          
+    118                  // IAS_STATUS attr report
+    119                  uint8_t i = 0;
+   \                     ??ias_zone_status_update_2: (+1)
+   \       0x42   0x2600             MOVS     R6,#+0
+    120                  dev_send_data_t send_data;
+    121          
+    122                  memset(&send_data, 0, sizeof(dev_send_data_t));
+   \       0x44   0x2774             MOVS     R7,#+116
+   \       0x46   0xF05F 0x0800      MOVS     R8,#+0
+   \       0x4A   0x46E9             MOV      R9,SP
+   \       0x4C   0x4642             MOV      R2,R8
+   \       0x4E   0x0039             MOVS     R1,R7
+   \       0x50   0x4648             MOV      R0,R9
+   \       0x52   0x....'....        BL       __aeabi_memset
+    123          
+    124                  send_data.qos = QOS_1;
+   \       0x56   0x2001             MOVS     R0,#+1
+   \       0x58   0xF88D 0x0008      STRB     R0,[SP, #+8]
+    125                  send_data.direction = ZCL_DATA_DIRECTION_SERVER_TO_CLIENT;
+   \       0x5C   0x2001             MOVS     R0,#+1
+   \       0x5E   0xF88D 0x0007      STRB     R0,[SP, #+7]
+    126                  send_data.command_id = CMD_ZONE_STATUS_CHANGE_NOTIFICATION_COMMAND_ID;
+   \       0x62   0x2000             MOVS     R0,#+0
+   \       0x64   0xF88D 0x0005      STRB     R0,[SP, #+5]
+    127                  send_data.commmand_type = ZCL_COMMAND_CLUSTER_SPEC_CMD;
+   \       0x68   0x2001             MOVS     R0,#+1
+   \       0x6A   0xF88D 0x0006      STRB     R0,[SP, #+6]
+    128                  send_data.addr.mode = SEND_MODE_GW;
+   \       0x6E   0x2000             MOVS     R0,#+0
+   \       0x70   0xF88D 0x000A      STRB     R0,[SP, #+10]
+    129                  send_data.addr.type.gw.cluster_id = CLUSTER_IAS_ZONE_CLUSTER_ID;
+   \       0x74   0xF44F 0x60A0      MOV      R0,#+1280
+   \       0x78   0xF8AD 0x000E      STRH     R0,[SP, #+14]
+    130                  send_data.addr.type.gw.src_ep = IAS_ZONE_ENDPOINT;
+   \       0x7C   0x2001             MOVS     R0,#+1
+   \       0x7E   0xF88D 0x000C      STRB     R0,[SP, #+12]
+    131                  send_data.delay_time = 0;
+   \       0x82   0x2000             MOVS     R0,#+0
+   \       0x84   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    132                  send_data.random_time = 0;
+   \       0x88   0x2000             MOVS     R0,#+0
+   \       0x8A   0xF8AD 0x0002      STRH     R0,[SP, #+2]
+    133                  send_data.data.private.data[i++] = ias_zone_status_bits.ias_zone_status;
+   \       0x8E   0x8820             LDRH     R0,[R4, #+0]
+   \       0x90   0x4669             MOV      R1,SP
+   \       0x92   0x0032             MOVS     R2,R6
+   \       0x94   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0x96   0x4411             ADD      R1,R1,R2
+   \       0x98   0x74C8             STRB     R0,[R1, #+19]
+   \       0x9A   0x1C76             ADDS     R6,R6,#+1
+    134                  send_data.data.private.data[i++] = ias_zone_status_bits.ias_zone_status >> 8;
+   \       0x9C   0x8820             LDRH     R0,[R4, #+0]
+   \       0x9E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \       0xA0   0x0A00             LSRS     R0,R0,#+8
+   \       0xA2   0x4669             MOV      R1,SP
+   \       0xA4   0x0032             MOVS     R2,R6
+   \       0xA6   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0xA8   0x4411             ADD      R1,R1,R2
+   \       0xAA   0x74C8             STRB     R0,[R1, #+19]
+   \       0xAC   0x1C76             ADDS     R6,R6,#+1
+    135                  send_data.data.private.data[i++] = 0;
+   \       0xAE   0x2000             MOVS     R0,#+0
+   \       0xB0   0x4669             MOV      R1,SP
+   \       0xB2   0x0032             MOVS     R2,R6
+   \       0xB4   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0xB6   0x4411             ADD      R1,R1,R2
+   \       0xB8   0x74C8             STRB     R0,[R1, #+19]
+   \       0xBA   0x1C76             ADDS     R6,R6,#+1
+    136                  send_data.data.private.data[i++] = get_ias_zone_id(1);
+   \       0xBC   0x2001             MOVS     R0,#+1
+   \       0xBE   0x....'....        BL       get_ias_zone_id
+   \       0xC2   0x4669             MOV      R1,SP
+   \       0xC4   0x0032             MOVS     R2,R6
+   \       0xC6   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0xC8   0x4411             ADD      R1,R1,R2
+   \       0xCA   0x74C8             STRB     R0,[R1, #+19]
+   \       0xCC   0x1C76             ADDS     R6,R6,#+1
+    137                  send_data.data.private.data[i++] = 0;
+   \       0xCE   0x2000             MOVS     R0,#+0
+   \       0xD0   0x4669             MOV      R1,SP
+   \       0xD2   0x0032             MOVS     R2,R6
+   \       0xD4   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0xD6   0x4411             ADD      R1,R1,R2
+   \       0xD8   0x74C8             STRB     R0,[R1, #+19]
+   \       0xDA   0x1C76             ADDS     R6,R6,#+1
+    138                  send_data.data.private.data[i++] = 0;
+   \       0xDC   0x2000             MOVS     R0,#+0
+   \       0xDE   0x4669             MOV      R1,SP
+   \       0xE0   0x0032             MOVS     R2,R6
+   \       0xE2   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0xE4   0x4411             ADD      R1,R1,R2
+   \       0xE6   0x74C8             STRB     R0,[R1, #+19]
+   \       0xE8   0x1C76             ADDS     R6,R6,#+1
+    139                  send_data.data.private.len = i;
+   \       0xEA   0xF88D 0x6012      STRB     R6,[SP, #+18]
+    140                  dev_zigbee_send_data(&send_data, NULL, 3000);
+   \       0xEE   0xF640 0x32B8      MOVW     R2,#+3000
+   \       0xF2   0x2100             MOVS     R1,#+0
+   \       0xF4   0x4668             MOV      R0,SP
+   \       0xF6   0x....'....        BL       dev_zigbee_send_data
+    141              }
+    142          }
+   \                     ??ias_zone_status_update_0: (+1)
+   \       0xFA   0xB01D             ADD      SP,SP,#+116
+   \       0xFC   0xE8BD 0x83F0      POP      {R4-R9,PC}       ;; return
+    143          
+    144          /**
+    145           * @description: get ias zone id 
+    146           * @param {in} ep: endpoind
+    147           * @return: none
+    148           */
+
+   \                                 In section .text, align 2, keep-with-next
+    149          uint8_t get_ias_zone_id(uint8_t ep)
+    150          {
+   \                     get_ias_zone_id: (+1)
+   \        0x0   0xB51C             PUSH     {R2-R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    151              uint8_t ias_zone_id;
+    152          
+    153              dev_zigbee_read_attribute(
+    154                          ep,
+    155                          CLUSTER_IAS_ZONE_CLUSTER_ID,
+    156                          ATTR_ZONE_ID_ATTRIBUTE_ID,
+    157                          &ias_zone_id,
+    158                          sizeof(ias_zone_id)
+    159                      );
+   \        0x4   0x2001             MOVS     R0,#+1
+   \        0x6   0x9000             STR      R0,[SP, #+0]
+   \        0x8   0xAB01             ADD      R3,SP,#+4
+   \        0xA   0x2211             MOVS     R2,#+17
+   \        0xC   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x10   0x0020             MOVS     R0,R4
+   \       0x12   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x14   0x....'....        BL       dev_zigbee_read_attribute
+    160              
+    161              return ias_zone_id;
+   \       0x18   0xF89D 0x0004      LDRB     R0,[SP, #+4]
+   \       0x1C   0xBD16             POP      {R1,R2,R4,PC}    ;; return
+    162          }
+    163          
+    164          /**
+    165           * @description: send enroll request func
+    166           * @param {type} none
+    167           * @return: none
+    168           */
+
+   \                                 In section .text, align 2, keep-with-next
+    169          void zig_ias_enroll_request_with_client(void)
+    170          {
+   \                     zig_ias_enroll_request_with_client: (+1)
+   \        0x0   0xE92D 0x41F8      PUSH     {R3-R8,LR}
+   \        0x4   0xB09D             SUB      SP,SP,#+116
+    171              dev_send_data_t send_data;
+    172              uint16_t ias_zone_type = IAS_ZONE_TYPE;
+   \        0x6   0x2415             MOVS     R4,#+21
+    173              uint8_t i = 0;
+   \        0x8   0x2500             MOVS     R5,#+0
+    174              memset( &send_data, 0, sizeof(dev_send_data_t) );
+   \        0xA   0x2674             MOVS     R6,#+116
+   \        0xC   0x2700             MOVS     R7,#+0
+   \        0xE   0x46E8             MOV      R8,SP
+   \       0x10   0x003A             MOVS     R2,R7
+   \       0x12   0x0031             MOVS     R1,R6
+   \       0x14   0x4640             MOV      R0,R8
+   \       0x16   0x....'....        BL       __aeabi_memset
+    175          
+    176              send_data.qos = QOS_1;
+   \       0x1A   0x2001             MOVS     R0,#+1
+   \       0x1C   0xF88D 0x0008      STRB     R0,[SP, #+8]
+    177              send_data.direction = ZCL_DATA_DIRECTION_SERVER_TO_CLIENT;
+   \       0x20   0x2001             MOVS     R0,#+1
+   \       0x22   0xF88D 0x0007      STRB     R0,[SP, #+7]
+    178              send_data.command_id = CMD_ZONE_ENROLL_REQUEST_COMMAND_ID;
+   \       0x26   0x2001             MOVS     R0,#+1
+   \       0x28   0xF88D 0x0005      STRB     R0,[SP, #+5]
+    179              send_data.commmand_type = ZCL_COMMAND_CLUSTER_SPEC_CMD;
+   \       0x2C   0x2001             MOVS     R0,#+1
+   \       0x2E   0xF88D 0x0006      STRB     R0,[SP, #+6]
+    180              send_data.addr.mode = SEND_MODE_GW;
+   \       0x32   0x2000             MOVS     R0,#+0
+   \       0x34   0xF88D 0x000A      STRB     R0,[SP, #+10]
+    181              send_data.addr.type.gw.cluster_id = CLUSTER_IAS_ZONE_CLUSTER_ID;
+   \       0x38   0xF44F 0x60A0      MOV      R0,#+1280
+   \       0x3C   0xF8AD 0x000E      STRH     R0,[SP, #+14]
+    182              send_data.addr.type.gw.src_ep = 1;
+   \       0x40   0x2001             MOVS     R0,#+1
+   \       0x42   0xF88D 0x000C      STRB     R0,[SP, #+12]
+    183              send_data.delay_time = 0;
+   \       0x46   0x2000             MOVS     R0,#+0
+   \       0x48   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    184              send_data.random_time = 0;
+   \       0x4C   0x2000             MOVS     R0,#+0
+   \       0x4E   0xF8AD 0x0002      STRH     R0,[SP, #+2]
+    185              send_data.data.private.data[i++] = (uint8_t)ias_zone_type;
+   \       0x52   0x4668             MOV      R0,SP
+   \       0x54   0x0029             MOVS     R1,R5
+   \       0x56   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \       0x58   0x4408             ADD      R0,R0,R1
+   \       0x5A   0x74C4             STRB     R4,[R0, #+19]
+   \       0x5C   0x1C6D             ADDS     R5,R5,#+1
+    186              send_data.data.private.data[i++] = ias_zone_type >> 8;
+   \       0x5E   0x0020             MOVS     R0,R4
+   \       0x60   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \       0x62   0x0A00             LSRS     R0,R0,#+8
+   \       0x64   0x4669             MOV      R1,SP
+   \       0x66   0x002A             MOVS     R2,R5
+   \       0x68   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0x6A   0x4411             ADD      R1,R1,R2
+   \       0x6C   0x74C8             STRB     R0,[R1, #+19]
+   \       0x6E   0x1C6D             ADDS     R5,R5,#+1
+    187              send_data.data.private.data[i++] = (uint8_t)MANUFACTURER_CODE;
+   \       0x70   0x2002             MOVS     R0,#+2
+   \       0x72   0x4669             MOV      R1,SP
+   \       0x74   0x002A             MOVS     R2,R5
+   \       0x76   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0x78   0x4411             ADD      R1,R1,R2
+   \       0x7A   0x74C8             STRB     R0,[R1, #+19]
+   \       0x7C   0x1C6D             ADDS     R5,R5,#+1
+    188              send_data.data.private.data[i++] = MANUFACTURER_CODE >> 8;
+   \       0x7E   0x2010             MOVS     R0,#+16
+   \       0x80   0x4669             MOV      R1,SP
+   \       0x82   0x002A             MOVS     R2,R5
+   \       0x84   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \       0x86   0x4411             ADD      R1,R1,R2
+   \       0x88   0x74C8             STRB     R0,[R1, #+19]
+   \       0x8A   0x1C6D             ADDS     R5,R5,#+1
+    189              send_data.data.private.len = i;
+   \       0x8C   0xF88D 0x5012      STRB     R5,[SP, #+18]
+    190          
+    191              dev_zigbee_send_data(&send_data, NULL, 3000);             
+   \       0x90   0xF640 0x32B8      MOVW     R2,#+3000
+   \       0x94   0x2100             MOVS     R1,#+0
+   \       0x96   0x4668             MOV      R0,SP
+   \       0x98   0x....'....        BL       dev_zigbee_send_data
+    192          }
+   \       0x9C   0xB01E             ADD      SP,SP,#+120
+   \       0x9E   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+    193          
+    194          /**
+    195           * @description: ias zone sensor basic  gpio init
+    196           * @param {type} none
+    197           * @return: none
+    198           */
+
+   \                                 In section .text, align 2, keep-with-next
+    199          void sensor_basic_init_io_status_updata(void)
+    200          {
+   \                     sensor_basic_init_io_status_updata: (+1)
+   \        0x0   0xB538             PUSH     {R3-R5,LR}
+    201              if((!sensor_init_io_status_set(&alarm_info)) || (!sensor_init_io_status_set(&tamper_info))) {
+   \        0x2   0x....             LDR.N    R4,??DataTable5
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0x....'....        BL       sensor_init_io_status_set
+   \        0xA   0x2800             CMP      R0,#+0
+   \        0xC   0xD005             BEQ.N    ??sensor_basic_init_io_status_updata_0
+   \        0xE   0x....             LDR.N    R5,??DataTable5_2
+   \       0x10   0x0028             MOVS     R0,R5
+   \       0x12   0x....'....        BL       sensor_init_io_status_set
+   \       0x16   0x2800             CMP      R0,#+0
+   \       0x18   0xD100             BNE.N    ??sensor_basic_init_io_status_updata_1
+    202                  return;
+   \                     ??sensor_basic_init_io_status_updata_0: (+1)
+   \       0x1A   0xE042             B.N      ??sensor_basic_init_io_status_updata_2
+    203              }
+    204          
+    205              if(alarm_info.new_status == (DEV_IO_ST_T)GPIO_SENSOR_INACTIVE) {
+   \                     ??sensor_basic_init_io_status_updata_1: (+1)
+   \       0x1C   0x7860             LDRB     R0,[R4, #+1]
+   \       0x1E   0x2800             CMP      R0,#+0
+   \       0x20   0xD106             BNE.N    ??sensor_basic_init_io_status_updata_3
+    206                  ias_zone_status_bits.zone_bits.alarm1_status_bit0 = IAS_ZONE_STATUS_BIT_INACTIVE;    
+   \       0x22   0x....             LDR.N    R1,??DataTable5_3
+   \       0x24   0x880A             LDRH     R2,[R1, #+0]
+   \       0x26   0xF64F 0x70FE      MOVW     R0,#+65534
+   \       0x2A   0x4002             ANDS     R2,R0,R2
+   \       0x2C   0x800A             STRH     R2,[R1, #+0]
+   \       0x2E   0xE004             B.N      ??sensor_basic_init_io_status_updata_4
+    207              } else {
+    208                  ias_zone_status_bits.zone_bits.alarm1_status_bit0 = IAS_ZONE_STATUS_BIT_ACTIVE;
+   \                     ??sensor_basic_init_io_status_updata_3: (+1)
+   \       0x30   0x....             LDR.N    R0,??DataTable5_3
+   \       0x32   0x8801             LDRH     R1,[R0, #+0]
+   \       0x34   0xF051 0x0101      ORRS     R1,R1,#0x1
+   \       0x38   0x8001             STRH     R1,[R0, #+0]
+    209              }
+    210              if(tamper_info.new_status == (DEV_IO_ST_T)GPIO_SENSOR_INACTIVE) {
+   \                     ??sensor_basic_init_io_status_updata_4: (+1)
+   \       0x3A   0x7868             LDRB     R0,[R5, #+1]
+   \       0x3C   0x2800             CMP      R0,#+0
+   \       0x3E   0xD106             BNE.N    ??sensor_basic_init_io_status_updata_5
+    211                  ias_zone_status_bits.zone_bits.tamper_status_bit2 = IAS_ZONE_STATUS_BIT_INACTIVE;    
+   \       0x40   0x....             LDR.N    R1,??DataTable5_3
+   \       0x42   0x880A             LDRH     R2,[R1, #+0]
+   \       0x44   0xF64F 0x70FB      MOVW     R0,#+65531
+   \       0x48   0x4002             ANDS     R2,R0,R2
+   \       0x4A   0x800A             STRH     R2,[R1, #+0]
+   \       0x4C   0xE004             B.N      ??sensor_basic_init_io_status_updata_6
+    212              } else {
+    213                  ias_zone_status_bits.zone_bits.tamper_status_bit2 = IAS_ZONE_STATUS_BIT_ACTIVE;
+   \                     ??sensor_basic_init_io_status_updata_5: (+1)
+   \       0x4E   0x....             LDR.N    R0,??DataTable5_3
+   \       0x50   0x8801             LDRH     R1,[R0, #+0]
+   \       0x52   0xF051 0x0104      ORRS     R1,R1,#0x4
+   \       0x56   0x8001             STRH     R1,[R0, #+0]
+    214              }
+    215              
+    216              tuya_print("ias_zone_alarm1_pre_change %d\r\n", ias_zone_status_bits.zone_bits.alarm1_status_bit0);
+   \                     ??sensor_basic_init_io_status_updata_6: (+1)
+   \       0x58   0x....             LDR.N    R4,??DataTable5_3
+   \       0x5A   0x7822             LDRB     R2,[R4, #+0]
+   \       0x5C   0xF012 0x0201      ANDS     R2,R2,#0x1
+   \       0x60   0x....             LDR.N    R1,??DataTable5_5
+   \       0x62   0x2000             MOVS     R0,#+0
+   \       0x64   0x....'....        BL       uart_printf
+    217              dev_led_stop_blink(1, DEV_IO_ON);
+   \       0x68   0x2101             MOVS     R1,#+1
+   \       0x6A   0x2001             MOVS     R0,#+1
+   \       0x6C   0x....'....        BL       dev_led_stop_blink
+    218              dev_timer_start_with_callback(LED_ALARM1_FLASH_EVT_ID, ALARM1_LED_FLASH_TIME, dev_evt_callback);
+   \       0x70   0x....             LDR.N    R5,??DataTable5_6
+   \       0x72   0x002A             MOVS     R2,R5
+   \       0x74   0x21C8             MOVS     R1,#+200
+   \       0x76   0x2024             MOVS     R0,#+36
+   \       0x78   0x....'....        BL       dev_timer_start_with_callback
+    219              tuya_print("ias_zone_tamper_pre_change %d\r\n", ias_zone_status_bits.zone_bits.tamper_status_bit2);
+   \       0x7C   0x8820             LDRH     R0,[R4, #+0]
+   \       0x7E   0xF3C0 0x0280      UBFX     R2,R0,#+2,#+1
+   \       0x82   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \       0x84   0x....             LDR.N    R1,??DataTable5_7
+   \       0x86   0x2000             MOVS     R0,#+0
+   \       0x88   0x....'....        BL       uart_printf
+    220              dev_led_stop_blink(2, DEV_IO_ON);
+   \       0x8C   0x2101             MOVS     R1,#+1
+   \       0x8E   0x2002             MOVS     R0,#+2
+   \       0x90   0x....'....        BL       dev_led_stop_blink
+    221              dev_timer_start_with_callback(LED_TAMPER_FLASH_EVT_ID, TAMPER_LED_FLASH_TIME, dev_evt_callback);
+   \       0x94   0x002A             MOVS     R2,R5
+   \       0x96   0x21C8             MOVS     R1,#+200
+   \       0x98   0x2027             MOVS     R0,#+39
+   \       0x9A   0x....'....        BL       dev_timer_start_with_callback
+    222              
+    223              ias_zone_status_update();
+   \       0x9E   0x....'....        BL       ias_zone_status_update
+    224          }
+   \                     ??sensor_basic_init_io_status_updata_2: (+1)
+   \       0xA2   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+    225          
+    226          /**
+    227           * @description: ias zone info to init status when stack change to no nwk 
+    228           * @param {in} nwk_status : zigbee network status
+    229           * @return: none
+    230           */
+
+   \                                 In section .text, align 2, keep-with-next
+    231          void ias_zone_off_net_status_reset(uint8_t nwk_status)
+    232          {
+   \                     ias_zone_off_net_status_reset: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    233              // leave nwk must to unenroll
+    234              if((nwk_status == NET_LOCAL_LEAVE) || (nwk_status == NET_REMOTE_LEAVE) || (nwk_status == NET_MF_TEST_LEAVE)) {
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \        0x8   0x2809             CMP      R0,#+9
+   \        0xA   0xD007             BEQ.N    ??ias_zone_off_net_status_reset_0
+   \        0xC   0x0020             MOVS     R0,R4
+   \        0xE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x10   0x2808             CMP      R0,#+8
+   \       0x12   0xD003             BEQ.N    ??ias_zone_off_net_status_reset_0
+   \       0x14   0x0020             MOVS     R0,R4
+   \       0x16   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x18   0x280A             CMP      R0,#+10
+   \       0x1A   0xD102             BNE.N    ??ias_zone_off_net_status_reset_1
+    235                  ias_zone_unenroll(IAS_ZONE_EP);
+   \                     ??ias_zone_off_net_status_reset_0: (+1)
+   \       0x1C   0x2001             MOVS     R0,#+1
+   \       0x1E   0x....'....        BL       ias_zone_unenroll
+    236              }
+    237          }
+   \                     ??ias_zone_off_net_status_reset_1: (+1)
+   \       0x22   0xBD10             POP      {R4,PC}          ;; return
+    238          
+    239          /**
+    240           * @description: unenroll to clear ias zone info
+    241           * @param {in} ep: endpoind
+    242           * @return: none
+    243           */
+
+   \                                 In section .text, align 2, keep-with-next
+    244          void ias_zone_unenroll(uint8_t ep)
+    245          {
+   \                     ias_zone_unenroll: (+1)
+   \        0x0   0xB538             PUSH     {R3-R5,LR}
+   \        0x2   0xB084             SUB      SP,SP,#+16
+   \        0x4   0x0004             MOVS     R4,R0
+   \        0x6   0x2108             MOVS     R1,#+8
+   \        0x8   0x2200             MOVS     R2,#+0
+   \        0xA   0xAD02             ADD      R5,SP,#+8
+   \        0xC   0x0028             MOVS     R0,R5
+   \        0xE   0x....'....        BL       __aeabi_memset
+    246              uint8_t ieee_address[] = {0, 0, 0, 0, 0, 0, 0, 0};
+    247              uint16_t ias_zone_type = IAS_ZONE_TYPE;
+   \       0x12   0x2015             MOVS     R0,#+21
+   \       0x14   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+    248          
+    249              dev_zigbee_write_attribute(
+    250                  ep,
+    251                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+    252                  ATTR_IAS_CIE_ADDRESS_ATTRIBUTE_ID,
+    253                  (uint8_t *)ieee_address,
+    254                  ATTR_IEEE_ADDRESS_ATTRIBUTE_TYPE
+    255              );
+   \       0x18   0x20F0             MOVS     R0,#+240
+   \       0x1A   0x9000             STR      R0,[SP, #+0]
+   \       0x1C   0xAB02             ADD      R3,SP,#+8
+   \       0x1E   0x2210             MOVS     R2,#+16
+   \       0x20   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x24   0x0020             MOVS     R0,R4
+   \       0x26   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x28   0x....'....        BL       dev_zigbee_write_attribute
+    256          
+    257             dev_zigbee_write_attribute(
+    258                  ep,
+    259                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+    260                  ATTR_ZONE_TYPE_ATTRIBUTE_ID,
+    261                  &ias_zone_type,
+    262                  ATTR_ENUM16_ATTRIBUTE_TYPE
+    263              );
+   \       0x2C   0x2031             MOVS     R0,#+49
+   \       0x2E   0x9000             STR      R0,[SP, #+0]
+   \       0x30   0xAB01             ADD      R3,SP,#+4
+   \       0x32   0x2201             MOVS     R2,#+1
+   \       0x34   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x38   0x0020             MOVS     R0,R4
+   \       0x3A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x3C   0x....'....        BL       dev_zigbee_write_attribute
+    264          
+    265              set_ias_zone_id(ep, IAS_ZONE_INVALID_ZONE_ID);
+   \       0x40   0x21FF             MOVS     R1,#+255
+   \       0x42   0x0020             MOVS     R0,R4
+   \       0x44   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x46   0x....'....        BL       set_ias_zone_id
+    266              set_ias_zone_enroll_state(ep, IAS_ZONE_STATE_NOT_ENROLLED);
+   \       0x4A   0x2100             MOVS     R1,#+0
+   \       0x4C   0x0020             MOVS     R0,R4
+   \       0x4E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x50   0x....'....        BL       set_ias_zone_enroll_state
+    267          }
+   \       0x54   0xB005             ADD      SP,SP,#+20
+   \       0x56   0xBD30             POP      {R4,R5,PC}       ;; return
+    268          
+    269          /**
+    270           * @description: set ias zone id after receive enroll response
+    271           * @param {in} ep: endpoind
+    272           * @param {in} zoneid: ias_zone id
+    273           * @return: none
+    274           */
+
+   \                                 In section .text, align 2, keep-with-next
+    275          static void set_ias_zone_id(uint8_t ep,uint8_t zone_id)
+    276          {
+   \                     set_ias_zone_id: (+1)
+   \        0x0   0xB513             PUSH     {R0,R1,R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    277              // tuya_print("ias zone id write %d\r\n",zoneid);
+    278              dev_zigbee_write_attribute(
+    279                  ep,
+    280                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+    281                  ATTR_ZONE_ID_ATTRIBUTE_ID,
+    282                  &zone_id,
+    283                  ATTR_INT8U_ATTRIBUTE_TYPE
+    284              );
+   \        0x4   0x2020             MOVS     R0,#+32
+   \        0x6   0x9000             STR      R0,[SP, #+0]
+   \        0x8   0xAB01             ADD      R3,SP,#+4
+   \        0xA   0x2211             MOVS     R2,#+17
+   \        0xC   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x10   0x0020             MOVS     R0,R4
+   \       0x12   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x14   0x....'....        BL       dev_zigbee_write_attribute
+    285          }
+   \       0x18   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    286          
+    287          /**
+    288           * @description: set ias zone state after receive enroll response
+    289           * @param {in} ep: endpoind
+    290           * @param {in} enroll_state: enroll state
+    291           * @return: none
+    292           */
+
+   \                                 In section .text, align 2, keep-with-next
+    293          static void set_ias_zone_enroll_state(uint8_t ep, uint8_t enroll_state)
+    294          {
+   \                     set_ias_zone_enroll_state: (+1)
+   \        0x0   0xB513             PUSH     {R0,R1,R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    295              // tuya_print(" ias state write %d\r\n",enrollstate);
+    296              dev_zigbee_write_attribute(
+    297                  ep,
+    298                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+    299                  ATTR_ZONE_STATE_ATTRIBUTE_ID,
+    300                  &enroll_state,
+    301                  ATTR_ENUM8_ATTRIBUTE_TYPE
+    302              );
+   \        0x4   0x2030             MOVS     R0,#+48
+   \        0x6   0x9000             STR      R0,[SP, #+0]
+   \        0x8   0xAB01             ADD      R3,SP,#+4
+   \        0xA   0x2200             MOVS     R2,#+0
+   \        0xC   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x10   0x0020             MOVS     R0,R4
+   \       0x12   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x14   0x....'....        BL       dev_zigbee_write_attribute
+    303          }
+   \       0x18   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    304          
+    305          /**
+    306           * @description: when joined nwk or rejoined nwk will be sync ias zone status 
+    307           * @param {type} none
+    308           * @return: none
+    309           */
+
+   \                                 In section .text, align 2, keep-with-next
+    310          void ias_sensor_status_sync(void)
+    311          {
+   \                     ias_sensor_status_sync: (+1)
+   \        0x0   0xB57C             PUSH     {R2-R6,LR}
+    312              uint8_t value;
+    313              value = gpio_raw_input_read_status(alarm_info.sensor_io_st.port, alarm_info.sensor_io_st.pin);
+   \        0x2   0x....             LDR.N    R5,??DataTable5
+   \        0x4   0x7969             LDRB     R1,[R5, #+5]
+   \        0x6   0x7928             LDRB     R0,[R5, #+4]
+   \        0x8   0x....'....        BL       gpio_raw_input_read_status
+   \        0xC   0x0004             MOVS     R4,R0
+    314              if(alarm_info.gpio_polarity == value) {
+   \        0xE   0x78E8             LDRB     R0,[R5, #+3]
+   \       0x10   0x0021             MOVS     R1,R4
+   \       0x12   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \       0x14   0x4288             CMP      R0,R1
+   \       0x16   0xD105             BNE.N    ??ias_sensor_status_sync_0
+    315                  ias_zone_status_bits.ias_zone_status |= IAS_ZONE_SENSOR_STATUS_ALARM1;
+   \       0x18   0x....             LDR.N    R0,??DataTable5_3
+   \       0x1A   0x8801             LDRH     R1,[R0, #+0]
+   \       0x1C   0xF051 0x0101      ORRS     R1,R1,#0x1
+   \       0x20   0x8001             STRH     R1,[R0, #+0]
+   \       0x22   0xE005             B.N      ??ias_sensor_status_sync_1
+    316              } else {
+    317                  ias_zone_status_bits.ias_zone_status &= (~IAS_ZONE_SENSOR_STATUS_ALARM1);
+   \                     ??ias_sensor_status_sync_0: (+1)
+   \       0x24   0x....             LDR.N    R1,??DataTable5_3
+   \       0x26   0x880A             LDRH     R2,[R1, #+0]
+   \       0x28   0xF64F 0x70FE      MOVW     R0,#+65534
+   \       0x2C   0x4002             ANDS     R2,R0,R2
+   \       0x2E   0x800A             STRH     R2,[R1, #+0]
+    318              }
+    319          
+    320              value = gpio_raw_input_read_status(tamper_info.sensor_io_st.port, tamper_info.sensor_io_st.pin);
+   \                     ??ias_sensor_status_sync_1: (+1)
+   \       0x30   0x....             LDR.N    R6,??DataTable5_2
+   \       0x32   0x7971             LDRB     R1,[R6, #+5]
+   \       0x34   0x7930             LDRB     R0,[R6, #+4]
+   \       0x36   0x....'....        BL       gpio_raw_input_read_status
+   \       0x3A   0x0005             MOVS     R5,R0
+    321              if(tamper_info.gpio_polarity == value) {
+   \       0x3C   0x78F0             LDRB     R0,[R6, #+3]
+   \       0x3E   0x0029             MOVS     R1,R5
+   \       0x40   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \       0x42   0x4288             CMP      R0,R1
+   \       0x44   0xD105             BNE.N    ??ias_sensor_status_sync_2
+    322                  ias_zone_status_bits.ias_zone_status |= IAS_ZONE_SENSOR_STATUS_TAMPER;
+   \       0x46   0x....             LDR.N    R0,??DataTable5_3
+   \       0x48   0x8801             LDRH     R1,[R0, #+0]
+   \       0x4A   0xF051 0x0104      ORRS     R1,R1,#0x4
+   \       0x4E   0x8001             STRH     R1,[R0, #+0]
+   \       0x50   0xE005             B.N      ??ias_sensor_status_sync_3
+    323              } else {
+    324                  ias_zone_status_bits.ias_zone_status &= (~IAS_ZONE_SENSOR_STATUS_TAMPER);
+   \                     ??ias_sensor_status_sync_2: (+1)
+   \       0x52   0x....             LDR.N    R1,??DataTable5_3
+   \       0x54   0x880A             LDRH     R2,[R1, #+0]
+   \       0x56   0xF64F 0x70FB      MOVW     R0,#+65531
+   \       0x5A   0x4002             ANDS     R2,R0,R2
+   \       0x5C   0x800A             STRH     R2,[R1, #+0]
+    325              }
+    326          
+    327              dev_zigbee_write_attribute(
+    328                  IAS_ZONE_EP,
+    329                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+    330                  ATTR_ZONE_STATUS_ATTRIBUTE_ID,
+    331                  &ias_zone_status_bits.ias_zone_status,
+    332                  ATTR_BITMAP16_ATTRIBUTE_TYPE
+    333              );
+   \                     ??ias_sensor_status_sync_3: (+1)
+   \       0x5E   0x2019             MOVS     R0,#+25
+   \       0x60   0x9000             STR      R0,[SP, #+0]
+   \       0x62   0x....             LDR.N    R3,??DataTable5_3
+   \       0x64   0x2202             MOVS     R2,#+2
+   \       0x66   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x6A   0x2001             MOVS     R0,#+1
+   \       0x6C   0x....'....        BL       dev_zigbee_write_attribute
+    334          }
+   \       0x70   0xBD73             POP      {R0,R1,R4-R6,PC}  ;; return
+    335          
+    336          
+    337          /**
+    338           * @description: receive ias zone cluster callback
+    339           * @param {in} dev_msg：receive message
+    340           * @return: none
+    341           */
+
+   \                                 In section .text, align 2, keep-with-next
+    342          void ias_zone_cluster_handler(dev_msg_t *dev_msg)
+    343          {
+   \                     ias_zone_cluster_handler: (+1)
+   \        0x0   0xB570             PUSH     {R4-R6,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    344              attr_value_t *attr_list = dev_msg -> data.attr_data.attr_value;
+   \        0x4   0x6925             LDR      R5,[R4, #+16]
+    345              uint8_t ep = dev_msg -> endpoint;
+   \        0x6   0x7966             LDRB     R6,[R4, #+5]
+    346              switch(attr_list[0].cmd) {
+   \        0x8   0x78A8             LDRB     R0,[R5, #+2]
+   \        0xA   0x2800             CMP      R0,#+0
+   \        0xC   0xD003             BEQ.N    ??ias_zone_cluster_handler_0
+   \        0xE   0x2802             CMP      R0,#+2
+   \       0x10   0xD022             BEQ.N    ??ias_zone_cluster_handler_1
+   \       0x12   0xD320             BCC.N    ??ias_zone_cluster_handler_2
+   \       0x14   0xE021             B.N      ??ias_zone_cluster_handler_3
+    347                  case CMD_ZONE_ENROLL_RESPONSE_COMMAND_ID: {
+    348                      dev_zigbee_specific_response_handle(dev_msg -> zcl_id, dev_msg -> endpoint, dev_msg -> cluster);
+   \                     ??ias_zone_cluster_handler_0: (+1)
+   \       0x16   0x8862             LDRH     R2,[R4, #+2]
+   \       0x18   0x7961             LDRB     R1,[R4, #+5]
+   \       0x1A   0x7920             LDRB     R0,[R4, #+4]
+   \       0x1C   0x....'....        BL       dev_zigbee_specific_response_handle
+    349                      // tuya_print("ias zone enroll response\r\n");
+    350                      if(attr_list[0].value[0] == IAS_ENROLL_RESPONSE_CODE_SUCCESS) {            //enroll response sucess
+   \       0x20   0x6868             LDR      R0,[R5, #+4]
+   \       0x22   0x7800             LDRB     R0,[R0, #+0]
+   \       0x24   0x2800             CMP      R0,#+0
+   \       0x26   0xD10B             BNE.N    ??ias_zone_cluster_handler_4
+    351                          set_ias_zone_enroll_state(ep, IAS_ZONE_STATE_ENROLLED);   //write ias zone state enrolled
+   \       0x28   0x2101             MOVS     R1,#+1
+   \       0x2A   0x0030             MOVS     R0,R6
+   \       0x2C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x2E   0x....'....        BL       set_ias_zone_enroll_state
+    352                          set_ias_zone_id(ep, attr_list[0].value[1]);                                 //write valid zone id
+   \       0x32   0x6868             LDR      R0,[R5, #+4]
+   \       0x34   0x7841             LDRB     R1,[R0, #+1]
+   \       0x36   0x0030             MOVS     R0,R6
+   \       0x38   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x3A   0x....'....        BL       set_ias_zone_id
+   \       0x3E   0xE009             B.N      ??ias_zone_cluster_handler_5
+    353                      } else {
+    354                          set_ias_zone_enroll_state(ep, IAS_ZONE_STATE_NOT_ENROLLED);
+   \                     ??ias_zone_cluster_handler_4: (+1)
+   \       0x40   0x2100             MOVS     R1,#+0
+   \       0x42   0x0030             MOVS     R0,R6
+   \       0x44   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x46   0x....'....        BL       set_ias_zone_enroll_state
+    355                          set_ias_zone_id(ep, IAS_ZONE_INVALID_ZONE_ID);
+   \       0x4A   0x21FF             MOVS     R1,#+255
+   \       0x4C   0x0030             MOVS     R0,R6
+   \       0x4E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x50   0x....'....        BL       set_ias_zone_id
+    356                      }
+    357                  }
+    358                  break;
+   \                     ??ias_zone_cluster_handler_5: (+1)
+   \       0x54   0xE001             B.N      ??ias_zone_cluster_handler_6
+    359                  case CMD_INITIATE_NORMAL_OPERATION_MODE_COMMAND_ID: {
+    360                      //TODO
+    361                  }
+    362                  break;
+   \                     ??ias_zone_cluster_handler_2: (+1)
+   \       0x56   0xE000             B.N      ??ias_zone_cluster_handler_6
+    363                  case CMD_INITIATE_TEST_MODE_COMMAND_ID: {
+    364                      //TODO
+    365                  }
+    366                  break;
+   \                     ??ias_zone_cluster_handler_1: (+1)
+   \       0x58   0xE7FF             B.N      ??ias_zone_cluster_handler_6
+    367                  default: 
+    368                  break;
+    369              }
+    370          }
+   \                     ??ias_zone_cluster_handler_3: (+1)
+   \                     ??ias_zone_cluster_handler_6: (+1)
+   \       0x5A   0xBD70             POP      {R4-R6,PC}       ;; return
+    371          
+    372          /**
+    373           * @description: receive write attribute ias zone cluster callback
+    374           * @param {in} attr_id: attribute ID
+    375           * @return: none
+    376           */
+
+   \                                 In section .text, align 2, keep-with-next
+    377          void ias_zone_write_attr_handler(uint16_t attr_id)
+    378          {
+   \                     ias_zone_write_attr_handler: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    379              switch(attr_id) {
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \        0x8   0x2810             CMP      R0,#+16
+   \        0xA   0xD107             BNE.N    ??ias_zone_write_attr_handler_0
+    380                  case ATTR_IAS_CIE_ADDRESS_ATTRIBUTE_ID: {
+    381                      if(get_ias_zone_enroll_state(IAS_ZONE_EP) == IAS_ZONE_STATE_NOT_ENROLLED) {
+   \        0xC   0x2001             MOVS     R0,#+1
+   \        0xE   0x....'....        BL       get_ias_zone_enroll_state
+   \       0x12   0x2800             CMP      R0,#+0
+   \       0x14   0xD101             BNE.N    ??ias_zone_write_attr_handler_1
+    382                          zig_ias_enroll_request_with_client();
+   \       0x16   0x....'....        BL       zig_ias_enroll_request_with_client
+    383                      }
+    384                  }
+    385                  break;
+   \                     ??ias_zone_write_attr_handler_1: (+1)
+   \       0x1A   0xE7FF             B.N      ??ias_zone_write_attr_handler_2
+    386                  default: 
+    387                  break;
+    388              }
+    389          }
+   \                     ??ias_zone_write_attr_handler_0: (+1)
+   \                     ??ias_zone_write_attr_handler_2: (+1)
+   \       0x1C   0xBD10             POP      {R4,PC}          ;; return
+    390          
+    391          /**
+    392           * @description: get ias zone state
+    393           * @param {in} ep: endpoind
+    394           * @return: none
+    395           */
+
+   \                                 In section .text, align 2, keep-with-next
+    396          uint8_t get_ias_zone_enroll_state(uint8_t ep)
+    397          {
+   \                     get_ias_zone_enroll_state: (+1)
+   \        0x0   0xB51C             PUSH     {R2-R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    398              uint8_t zone_sate = IAS_ZONE_STATE_NOT_ENROLLED;
+   \        0x4   0x2000             MOVS     R0,#+0
+   \        0x6   0xF88D 0x0004      STRB     R0,[SP, #+4]
+    399              dev_zigbee_read_attribute(
+    400                          ep,
+    401                          CLUSTER_IAS_ZONE_CLUSTER_ID,
+    402                          ATTR_ZONE_STATE_ATTRIBUTE_ID,
+    403                          &zone_sate,
+    404                          sizeof(zone_sate)
+    405                      );
+   \        0xA   0x2001             MOVS     R0,#+1
+   \        0xC   0x9000             STR      R0,[SP, #+0]
+   \        0xE   0xAB01             ADD      R3,SP,#+4
+   \       0x10   0x2200             MOVS     R2,#+0
+   \       0x12   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x16   0x0020             MOVS     R0,R4
+   \       0x18   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x1A   0x....'....        BL       dev_zigbee_read_attribute
+    406              // tuya_print("ias zone enroll status get %d\r\n",zone_sate);
+    407              return zone_sate;
+   \       0x1E   0xF89D 0x0004      LDRB     R0,[SP, #+4]
+   \       0x22   0xBD16             POP      {R1,R2,R4,PC}    ;; return
+    408          }
+    409          
+    410          /**
+    411           * @description: ias zone sensor status pre-report callback
+    412           * @param {in} status: ias zone status
+    413           * @return: none
+    414           */
+
+   \                                 In section .text, align 2, keep-with-next
+    415          bool_t ias_zone_status_pre_update_callback(uint16_t status)
+    416          {
+   \                     ias_zone_status_pre_update_callback: (+1)
+   \        0x0   0xB501             PUSH     {R0,LR}
+   \        0x2   0xB082             SUB      SP,SP,#+8
+    417              dev_zigbee_write_attribute(
+    418                  IAS_ZONE_ENDPOINT,
+    419                  CLUSTER_IAS_ZONE_CLUSTER_ID,
+    420                  ATTR_ZONE_STATUS_ATTRIBUTE_ID,
+    421                  &status,
+    422                  ATTR_BITMAP16_ATTRIBUTE_TYPE
+    423              );
+   \        0x4   0x2019             MOVS     R0,#+25
+   \        0x6   0x9000             STR      R0,[SP, #+0]
+   \        0x8   0xAB02             ADD      R3,SP,#+8
+   \        0xA   0x2202             MOVS     R2,#+2
+   \        0xC   0xF44F 0x61A0      MOV      R1,#+1280
+   \       0x10   0x2001             MOVS     R0,#+1
+   \       0x12   0x....'....        BL       dev_zigbee_write_attribute
+    424              return TRUE;
+   \       0x16   0x2001             MOVS     R0,#+1
+   \       0x18   0xBD0E             POP      {R1-R3,PC}       ;; return
+    425          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \        0x0   0x....'....        DC32     alarm_info
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \        0x0   0x....'....        DC32     gpio_sensor_debounce_handler
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \        0x0   0x....'....        DC32     tamper_info
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \        0x0   0x....'....        DC32     ias_zone_status_bits
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \        0x0   0x....'....        DC32     ?_0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \        0x0   0x....'....        DC32     ?_1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_6:
+   \        0x0   0x....'....        DC32     dev_evt_callback
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_7:
+   \        0x0   0x....'....        DC32     ?_2
+
+   \                                 In section .rodata, align 4
+   \                     ?_0:
+   \        0x0   0x69 0x61          DC8 "ias_zone_status_update %d\015\012"
+   \              0x73 0x5F    
+   \              0x7A 0x6F    
+   \              0x6E 0x65    
+   \              0x5F 0x73    
+   \              0x74 0x61    
+   \              0x74 0x75    
+   \              0x73 0x5F    
+   \              0x75 0x70    
+   \              0x64 0x61    
+   \              0x74 0x65    
+   \              0x20 0x25    
+   \              0x64 0x0D    
+   \              0x0A 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     ?_1:
+   \        0x0   0x69 0x61          DC8 "ias_zone_alarm1_pre_change %d\015\012"
+   \              0x73 0x5F    
+   \              0x7A 0x6F    
+   \              0x6E 0x65    
+   \              0x5F 0x61    
+   \              0x6C 0x61    
+   \              0x72 0x6D    
+   \              0x31 0x5F    
+   \              0x70 0x72    
+   \              0x65 0x5F    
+   \              0x63 0x68    
+   \              0x61 0x6E    
+   \              0x67 0x65    
+   \              0x20 0x25    
+   \              0x64 0x0D    
+   \              0x0A 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     ?_2:
+   \        0x0   0x69 0x61          DC8 "ias_zone_tamper_pre_change %d\015\012"
+   \              0x73 0x5F    
+   \              0x7A 0x6F    
+   \              0x6E 0x65    
+   \              0x5F 0x74    
+   \              0x61 0x6D    
+   \              0x70 0x65    
+   \              0x72 0x5F    
+   \              0x70 0x72    
+   \              0x65 0x5F    
+   \              0x63 0x68    
+   \              0x61 0x6E    
+   \              0x67 0x65    
+   \              0x20 0x25    
+   \              0x64 0x0D    
+   \              0x0A 0x00    
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   get_ias_zone_enroll_state
+        16   -> dev_zigbee_read_attribute
+      16   get_ias_zone_id
+        16   -> dev_zigbee_read_attribute
+      24   gpio_sensor_alarm1_interrupt_handler
+        24   -> dev_timer_start_with_callback
+        24   -> dev_timer_stop
+        24   -> gpio_raw_input_read_status
+      24   gpio_sensor_tamper_interrupt_handler
+        24   -> dev_timer_start_with_callback
+        24   -> dev_timer_stop
+        24   -> gpio_raw_input_read_status
+      24   ias_sensor_status_sync
+        24   -> dev_zigbee_write_attribute
+        24   -> gpio_raw_input_read_status
+      16   ias_zone_cluster_handler
+        16   -> dev_zigbee_specific_response_handle
+        16   -> set_ias_zone_enroll_state
+        16   -> set_ias_zone_id
+      24   ias_zone_info_init
+        24   -> dev_zigbee_write_attribute
+       8   ias_zone_off_net_status_reset
+         8   -> ias_zone_unenroll
+      16   ias_zone_status_pre_update_callback
+        16   -> dev_zigbee_write_attribute
+     144   ias_zone_status_update
+       144   -> __aeabi_memset
+       144   -> dev_zigbee_send_data
+       144   -> get_ias_zone_enroll_state
+       144   -> get_ias_zone_id
+       144   -> ias_zone_status_pre_update_callback
+       144   -> nwk_state_get
+       144   -> uart_printf
+       144   -> zig_ias_enroll_request_with_client
+      32   ias_zone_unenroll
+        32   -> __aeabi_memset
+        32   -> dev_zigbee_write_attribute
+        32   -> set_ias_zone_enroll_state
+        32   -> set_ias_zone_id
+       8   ias_zone_write_attr_handler
+         8   -> get_ias_zone_enroll_state
+         8   -> zig_ias_enroll_request_with_client
+      16   sensor_basic_init_io_status_updata
+        16   -> dev_led_stop_blink
+        16   -> dev_timer_start_with_callback
+        16   -> ias_zone_status_update
+        16   -> sensor_init_io_status_set
+        16   -> uart_printf
+      16   set_ias_zone_enroll_state
+        16   -> dev_zigbee_write_attribute
+      16   set_ias_zone_id
+        16   -> dev_zigbee_write_attribute
+     144   zig_ias_enroll_request_with_client
+       144   -> __aeabi_memset
+       144   -> dev_zigbee_send_data
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable5_6
+       4  ??DataTable5_7
+      28  ?_0
+      32  ?_1
+      32  ?_2
+      36  get_ias_zone_enroll_state
+      30  get_ias_zone_id
+      94  gpio_sensor_alarm1_interrupt_handler
+      94  gpio_sensor_tamper_interrupt_handler
+     114  ias_sensor_status_sync
+      92  ias_zone_cluster_handler
+      54  ias_zone_info_init
+      36  ias_zone_off_net_status_reset
+       2  ias_zone_status_bits
+      26  ias_zone_status_pre_update_callback
+     256  ias_zone_status_update
+      88  ias_zone_unenroll
+      30  ias_zone_write_attr_handler
+     164  sensor_basic_init_io_status_updata
+      26  set_ias_zone_enroll_state
+      26  set_ias_zone_id
+     162  zig_ias_enroll_request_with_client
+
+ 
+     2 bytes in section .bss
+    92 bytes in section .rodata
+ 1'360 bytes in section .text
+ 
+ 1'360 bytes of CODE  memory
+    92 bytes of CONST memory
+     2 bytes of DATA  memory
+
+Errors: none
+Warnings: none

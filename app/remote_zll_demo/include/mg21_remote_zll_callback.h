@@ -1,0 +1,32 @@
+
+#ifndef _PRJ_CALLBACKS_H_
+#define _PRJ_CALLBACKS_H_
+
+#include "tuya_zigbee_sdk.h"
+#include "zigbee_dev_template.h"
+
+
+//cluster and attribute
+
+#define GROUP_CLIENT_ATTR_LIST  \
+{ 0xFFFD, ATTR_INT16U_ATTRIBUTE_TYPE, 2, (ATTR_MASK_CLIENT),(uint8_t*)0x0001 },\
+
+#define SCENE_CLIENT_ATTR_LIST  \
+{ 0xFFFD, ATTR_INT16U_ATTRIBUTE_TYPE, 2, (ATTR_MASK_CLIENT),(uint8_t*)0x0001 },\
+
+#define  ON_OFF_CLIENT_ATTR_LIST   \
+{ 0xFFFD, ATTR_INT16U_ATTRIBUTE_TYPE, 2, (ATTR_MASK_CLIENT),(uint8_t*)0x0001 },\
+
+#define  LEVEL_CLIENT_ATTR_LIST \
+{ 0xFFFD, ATTR_INT16U_ATTRIBUTE_TYPE, 2, (ATTR_MASK_CLIENT),(uint8_t*)0x0001 },\
+
+#define  COLOR_CLIENT_ATTR_LIST   \
+{ 0xFFFD, ATTR_INT16U_ATTRIBUTE_TYPE, 2, (ATTR_MASK_CLIENT),(uint8_t*)0x0001 },\
+
+#define  ZLL_CLIENT_ATTR_LIST  \
+{ 0xFFFD, ATTR_INT16U_ATTRIBUTE_TYPE, 2, (ATTR_MASK_CLIENT),(uint8_t*)0x0001 },\
+
+#define  ZLL_ATTR_LIST  \
+{ 0xFFFD, ATTR_INT16U_ATTRIBUTE_TYPE, 2, 0,(uint8_t*)0x0001 },\
+
+#endif

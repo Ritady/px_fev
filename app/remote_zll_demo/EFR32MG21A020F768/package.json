@@ -1,0 +1,75 @@
+{
+	"fimwareInfo": {
+		"name": "mg21_remote_zll",
+		"description": "mg21_remote_zll",
+		"version": "1.0.0",
+		"bv_version": "1.0",
+		"ic": "EFR32MG21A020F768",
+		"ota_image_type":"0x1602",
+		"manufacture_id":"0x1002",
+		"model_id":"TS1001",
+		"pid": "ke6sfooq",
+		"manufacture_name": "_TZ3000_",
+		"module_name":"ZS3L"
+	},
+	"uartConfig": {
+		"uart_enable": "true",
+		"uart_num": 1,
+		"uart": [
+		  {
+			"uart0_rx_port": "PORT_A",
+			"uart0_rx_pin": "PIN_1",
+			"uart0_rx_loc": "LOC_0",
+			"uart0_tx_port": "PORT_A",
+			"uart0_tx_pin": "PIN_0",
+			"uart0_tx_loc": "LOC_0",
+			"uart0_bandrate": 115200
+		  }
+		]
+	},
+  "ioConfig": {
+    "led_enable": "true",
+	"led_num": 1,
+	"key_enable": "true",
+	"key_num": 4,
+    "led": [
+		  {
+			"led0_port": "PORT_C",
+			"led0_pin": "PIN_0",
+			"led0_mode": "GPIO_MODE_OUTPUT_PP",
+			"led0_out": "GPIO_DOUT_HIGH",
+			"led0_driver": "GPIO_LEVEL_LOW"
+		  }
+	],
+	"key": [
+		  {
+			"key0_port": "PORT_A",
+			"key0_pin": "PIN_0",
+			"key0_mode": "GPIO_MODE_INPUT_PULL",
+			"key0_out": "GPIO_DOUT_HIGH",
+			"key0_driver": "GPIO_LEVEL_LOW"
+		  },
+		  {
+			"key1_port": "PORT_A",
+			"key1_pin": "PIN_3",
+			"key1_mode": "GPIO_MODE_INPUT_PULL",
+			"key1_out": "GPIO_DOUT_HIGH",
+			"key1_driver": "GPIO_LEVEL_LOW"
+		  },
+		  {
+			"key2_port": "PORT_A",
+			"key2_pin": "PIN_4",
+			"key2_mode": "GPIO_MODE_INPUT_PULL",
+			"key2_out": "GPIO_DOUT_HIGH",
+			"key2_driver": "GPIO_LEVEL_LOW"
+		  },
+		  {
+			"key3_port": "PORT_B",
+			"key3_pin": "PIN_0",
+			"key3_mode": "GPIO_MODE_INPUT_PULL",
+			"key3_out": "GPIO_DOUT_HIGH",
+			"key3_driver": "GPIO_LEVEL_LOW"
+		  }
+	]
+  }
+}

@@ -1,0 +1,75 @@
+{
+	"fimwareInfo": {
+		"name": "tmp_hum_lcd_sensor",
+		"description": "this is a project",
+		"version": "1.0.0",
+		"ic": "EFR32MG21A020F768",
+		"ota_image_type":"0x1602",
+		"manufacture_id":"0x1002",
+		"model_id":"TS0201",
+		"pid": "gjll29eb",
+		"manufacture_name": "_TZ3000_",
+		"module_name":"ZS3L"
+	},
+	"uartConfig": {
+		"uart_enable": "true",
+		"uart_num": 1,
+		"uart": [
+			{
+				"uart0_rx_port": "PORT_A",
+				"uart0_rx_pin": "PIN_6",
+				"uart0_rx_loc": "LOC_0",
+				"uart0_tx_port": "PORT_A",
+				"uart0_tx_pin": "PIN_5",
+				"uart0_tx_loc": "LOC_0",
+				"uart0_bandrate": 115200
+			}
+		]
+	},
+  	"ioConfig": {
+		"led_enable": "true",
+		"led_num": 1,
+		"key_enable": "true",
+		"key_num": 1,
+		"sensor_enable": "true",
+		"sensor_num": 0,
+		"tamper_enable": "true",
+		"tamper_num": 0,
+    	"led": [
+			{
+				"led0_port": "PORT_C",
+				"led0_pin": "PIN_0",
+				"led0_mode": "GPIO_MODE_OUTPUT_PP",
+				"led0_out": "GPIO_DOUT_HIGH",
+				"led0_driver": "GPIO_LEVEL_LOW"
+			}
+		],
+		"key": [
+			{
+				"key0_port": "PORT_A",
+				"key0_pin": "PIN_0",
+				"key0_mode": "GPIO_MODE_INPUT_PULL",
+				"key0_out": "GPIO_DOUT_HIGH",
+				"key0_driver": "GPIO_LEVEL_LOW"
+			} 
+		],
+		"sensor": [
+			{
+				"alarm1_port": "PORT_A",
+				"alarm1_pin": "PIN_3",
+				"alarm1_mode": "GPIO_MODE_INPUT_HIGH_IMPEDANCE",
+				"alarm1_out": "GPIO_DOUT_LOW",
+				"alarm1_driver": "GPIO_LEVEL_ALL"
+			}
+		],
+		"tamper": [
+			{
+				"tamper_port": "PORT_A",
+				"tamper_pin": "PIN_4",
+				"tamper_mode": "GPIO_MODE_INPUT_HIGH_IMPEDANCE",
+				"tamper_out": "GPIO_DOUT_LOW",
+				"tamper_driver": "GPIO_LEVEL_ALL"
+			}
+		]
+	}
+}

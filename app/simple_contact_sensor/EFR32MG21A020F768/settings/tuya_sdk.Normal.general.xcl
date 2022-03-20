@@ -1,0 +1,15 @@
+"D:\IAR_FOR_ARM\arm\bin\armproc.dll" 
+
+"D:\IAR_FOR_ARM\arm\bin\armjlink2.dll" 
+
+"D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\exe\sdk_route.out" 
+
+--plugin="D:\IAR_FOR_ARM\arm\bin\armbat.dll" 
+
+--device_macro="D:\IAR_FOR_ARM\arm\config\debugger\SiliconLaboratories\Trace_xG21.dmac" 
+
+--flash_loader="D:\IAR_FOR_ARM\arm\config\flashloader\SiliconLaboratories\FlashGECKOS2.board" 
+
+
+
+

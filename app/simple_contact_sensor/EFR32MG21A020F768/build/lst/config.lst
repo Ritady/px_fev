@@ -1,0 +1,151 @@
+﻿###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.40.1.212/W32 for ARM         24/Jan/2022  17:00:04
+# Copyright 1999-2019 IAR Systems AB.
+#
+#    Cpu mode     =  
+#    Endian       =  little
+#    Source file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\config.c
+#        [UTF-8]
+#    Command line =
+#        -f C:\Users\Answer\AppData\Local\Temp\EW301F.tmp
+#        (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\config.c
+#        -lC
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst
+#        --diag_suppress Pa050 -o
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M33.no_dsp --cmse --no_path_in_file_macros
+#        --separate_cluster_for_initialized_variables -e --fpu=VFPv5_sp
+#        --dlib_config D:\IAR_FOR_ARM\arm\inc\c\DLib_Config_Normal.h -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\common\include\
+#        -On --use_c++_inline --source_encoding utf8 --text_out utf8
+#        --utf8_text_in)
+#    Locale       =  C
+#    List file    =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst\config.lst
+#    Object file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj\config.o
+#
+###############################################################################
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\config.c
+      1          /*************************************************************************************/
+      2          /* Automatically-generated file. Do not edit! */
+      3          /*************************************************************************************/
+      4          #include "config.h"
+      5          
+      6          
+
+   \                                 In section .data, align 4
+      7          char *g_firmware_name = FIRMWARE_NAME;
+   \                     g_firmware_name:
+   \        0x0   0x....'....        DC32 ?_0
+
+   \                                 In section .data, align 1
+      8          uint8_t g_firmware_ver = FIRMWARE_VER;
+   \                     g_firmware_ver:
+   \        0x0   0x40               DC8 64
+      9          
+
+   \                                 In section .text, align 4, keep-with-next
+     10          void firmware_config(void)
+     11          {
+   \                     firmware_config: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     12              dev_register_base_info(MODEL_ID, PRODUCTOR_ID_PFEFIX, PRODUCTOR_ID);
+   \        0x2   0x4A03             LDR.N    R2,??firmware_config_0
+   \        0x4   0x4903             LDR.N    R1,??firmware_config_0+0x4
+   \        0x6   0x4804             LDR.N    R0,??firmware_config_0+0x8
+   \        0x8   0x....'....        BL       dev_register_base_info
+     13          }
+   \        0xC   0xBD01             POP      {R0,PC}          ;; return
+   \        0xE   0xBF00             Nop      
+   \                     ??firmware_config_0:
+   \       0x10   0x....'....        DC32     ?_3
+   \       0x14   0x....'....        DC32     ?_2
+   \       0x18   0x....'....        DC32     ?_1
+
+   \                                 In section .rodata, align 4
+   \                     ?_0:
+   \        0x0   0x73 0x69          DC8 "simple_contact_sensor"
+   \              0x6D 0x70    
+   \              0x6C 0x65    
+   \              0x5F 0x63    
+   \              0x6F 0x6E    
+   \              0x74 0x61    
+   \              0x63 0x74    
+   \              0x5F 0x73    
+   \              0x65 0x6E    
+   \              0x73 0x6F    
+   \              0x72 0x00    
+   \       0x16   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_1:
+   \        0x0   0x54 0x53          DC8 "TS0203"
+   \              0x30 0x32    
+   \              0x30 0x33    
+   \              0x00         
+   \        0x7   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_2:
+   \        0x0   0x5F 0x54          DC8 "_TZ3000_"
+   \              0x5A 0x33    
+   \              0x30 0x30    
+   \              0x30 0x5F    
+   \              0x00         
+   \        0x9   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     ?_3:
+   \        0x0   0x61 0x6C          DC8 "alo8ncai"
+   \              0x6F 0x38    
+   \              0x6E 0x63    
+   \              0x61 0x69    
+   \              0x00         
+   \        0x9   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   firmware_config
+         8   -> dev_register_base_info
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      24  ?_0
+       8  ?_1
+      12  ?_2
+      12  ?_3
+      28  firmware_config
+       4  g_firmware_name
+       1  g_firmware_ver
+
+ 
+  5 bytes in section .data
+ 56 bytes in section .rodata
+ 28 bytes in section .text
+ 
+ 28 bytes of CODE  memory
+ 56 bytes of CONST memory
+  5 bytes of DATA  memory
+
+Errors: none
+Warnings: none

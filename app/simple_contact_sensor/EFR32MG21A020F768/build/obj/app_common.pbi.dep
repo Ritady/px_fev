@@ -1,0 +1,43 @@
+app_common.pbi: \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\app_common.c \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\config.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include\tuya_zigbee_sdk.h \
+  D:\IAR_FOR_ARM\arm\inc\c\stdio.h D:\IAR_FOR_ARM\arm\inc\c\ycheck.h \
+  D:\IAR_FOR_ARM\arm\inc\c\yvals.h \
+  D:\IAR_FOR_ARM\arm\inc\c\DLib_Defaults.h \
+  D:\\IAR_FOR_ARM\\arm\\inc\\c\\DLib_Config_Normal.h \
+  D:\IAR_FOR_ARM\arm\inc\c\DLib_Product.h \
+  D:\IAR_FOR_ARM\arm\inc\c\ysizet.h D:\IAR_FOR_ARM\arm\inc\c\stdlib.h \
+  D:\IAR_FOR_ARM\arm\inc\c\DLib_Product_stdlib.h \
+  D:\IAR_FOR_ARM\arm\inc\c\string.h \
+  D:\IAR_FOR_ARM\arm\inc\c\DLib_Product_string.h \
+  D:\IAR_FOR_ARM\arm\inc\c\time.h D:\IAR_FOR_ARM\arm\inc\c/time32.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/type_def.h \
+  D:\IAR_FOR_ARM\arm\inc\c\stddef.h D:\IAR_FOR_ARM\arm\inc\c\stdint.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_gpio.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_adc.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_spi.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_uart.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_i2c.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_battery.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_timer.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_pwm.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_systick_timer.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/hal_flash.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/zigbee_attr.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/zigbee_cmd.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/zigbee_dev_template.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/tuya_zigbee_stack.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/tuya_tools.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/zigbee_raw_cmd_api.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/tuya_oem_kit.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/tuya_zigbee_modules.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/tuya_mf_test.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/tuya_mcu_os.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include/tuya_app_timer.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\app_common.h \
+  D:\IAR_FOR_ARM\arm\inc\c\stdbool.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include\tuya_zigbee_modules.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\ias_zone_cluster.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\device_register.h \
+  D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include/config.h

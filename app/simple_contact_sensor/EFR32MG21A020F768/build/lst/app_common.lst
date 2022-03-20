@@ -1,0 +1,1220 @@
+﻿###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.40.1.212/W32 for ARM         24/Jan/2022  17:00:04
+# Copyright 1999-2019 IAR Systems AB.
+#
+#    Cpu mode     =  
+#    Endian       =  little
+#    Source file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\app_common.c
+#        [UTF-8]
+#    Command line =
+#        -f C:\Users\Answer\AppData\Local\Temp\EW3020.tmp
+#        (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\app_common.c
+#        -lC
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst
+#        --diag_suppress Pa050 -o
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M33.no_dsp --cmse --no_path_in_file_macros
+#        --separate_cluster_for_initialized_variables -e --fpu=VFPv5_sp
+#        --dlib_config D:\IAR_FOR_ARM\arm\inc\c\DLib_Config_Normal.h -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\common\include\
+#        -On --use_c++_inline --source_encoding utf8 --text_out utf8
+#        --utf8_text_in)
+#    Locale       =  C
+#    List file    =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst\app_common.lst
+#    Object file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj\app_common.o
+#
+###############################################################################
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\app_common.c
+      1          /*
+      2           * @file: app_common.c
+      3           * @brief: 
+      4           * @author: Arien
+      5           * @date: 2021-08-31 18:00:00
+      6           * @email: Arien.ye@tuya.com
+      7           * @copyright: HANGZHOU TUYA INFORMATION TECHNOLOGY CO.,LTD
+      8           * @company: http://www.tuya.com
+      9           */
+     10          #include "config.h"
+     11          #include "app_common.h"
+     12          #include "ias_zone_cluster.h"
+     13          #include "device_register.h"
+     14          
+     15          // key lock variable
+
+   \                                 In section .data, align 1
+     16          bool_t g_key_lock_flg = TRUE;
+   \                     g_key_lock_flg:
+   \        0x0   0x01               DC8 1
+     17          // mftest uart config struct
+
+   \                                 In section .bss, align 4
+     18          user_uart_config_t uart_config;
+   \                     uart_config:
+   \        0x0                      DS8 20
+     19          // alarm config information struct
+
+   \                                 In section .bss, align 4
+     20          sensor_t alarm_info;
+   \                     alarm_info:
+   \        0x0                      DS8 16
+     21          // tamper config information struct
+
+   \                                 In section .bss, align 4
+     22          sensor_t tamper_info;
+   \                     tamper_info:
+   \        0x0                      DS8 16
+     23          
+     24          // key configure list
+
+   \                                 In section .rodata, align 4
+     25          const gpio_config_t gpio_key_config[] = {
+   \                     gpio_key_config:
+   \        0x0   0x01 0x00          DC8 1, 0, 1, 1, 0, 0, 0, 0
+   \              0x01 0x01    
+   \              0x00 0x00    
+   \              0x00 0x00    
+     26              KEYS_IO_LIST
+     27          };
+     28          
+     29          // led io configure list
+
+   \                                 In section .rodata, align 4
+     30          const gpio_config_t gpio_output_config[] = {
+   \                     gpio_output_config:
+   \        0x0   0x01 0x01          DC8 1, 1, 2, 1, 0, 2, 2, 2, 1, 0, 3, 0, 2, 1, 0, 0
+   \              0x02 0x01    
+   \              0x00 0x02    
+   \              0x02 0x02    
+   \              0x01 0x00    
+   \              0x03 0x00    
+   \              0x02 0x01    
+   \              0x00 0x00    
+     31              LEDS_IO_LIST
+     32          };
+     33          
+     34          // sensor io configure list
+
+   \                                 In section .rodata, align 4
+     35          const gpio_config_t gpio_sensor_config[] = {
+   \                     gpio_sensor_config:
+   \        0x0   0x00 0x03          DC8 0, 3, 0, 0, 2, 0, 0, 0
+   \              0x00 0x00    
+   \              0x02 0x00    
+   \              0x00 0x00    
+     36              SENSORS_IO_LIST
+     37          };
+     38          
+     39          // tamper io configure list
+
+   \                                 In section .rodata, align 4
+     40          const gpio_config_t gpio_tamper_config[] = {
+   \                     gpio_tamper_config:
+   \        0x0   0x00 0x04          DC8 0, 4, 0, 0, 2, 0, 0, 0
+   \              0x00 0x00    
+   \              0x02 0x00    
+   \              0x00 0x00    
+     41              TAMPER_IO_LIST
+     42          };
+     43          
+     44          /**
+     45           * @description: uart init func
+     46           * @param {type} none
+     47           * @return: none
+     48           */
+
+   \                                 In section .text, align 2, keep-with-next
+     49          void uart_init(void)
+     50          {
+   \                     uart_init: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     51              mf_test_uart_config();
+   \        0x2   0x....'....        BL       mf_test_uart_config
+     52              user_uart_init((user_uart_config_t *)&uart_config);
+   \        0x6   0x....'....        LDR.W    R0,??DataTable8
+   \        0xA   0x....'....        BL       user_uart_init
+     53          }
+   \        0xE   0xBD01             POP      {R0,PC}          ;; return
+     54          
+     55          /**
+     56           * @description: mf test uart register, aotomatic generated, not edit
+     57           * @param {void} none
+     58           * @return: user_uart_config_t mf uart config information
+     59           */
+
+   \                                 In section .text, align 2, keep-with-next
+     60          user_uart_config_t* mf_test_uart_config(void)
+     61          {
+   \                     mf_test_uart_config: (+1)
+   \        0x0   0xE92D 0x43F0      PUSH     {R4-R9,LR}
+   \        0x4   0xB085             SUB      SP,SP,#+20
+     62              memset(&uart_config, 0, sizeof(user_uart_config_t));
+   \        0x6   0x2414             MOVS     R4,#+20
+   \        0x8   0x2500             MOVS     R5,#+0
+   \        0xA   0x....'....        LDR.W    R6,??DataTable8
+   \        0xE   0x0037             MOVS     R7,R6
+   \       0x10   0x002A             MOVS     R2,R5
+   \       0x12   0x0021             MOVS     R1,R4
+   \       0x14   0x0038             MOVS     R0,R7
+   \       0x16   0x....'....        BL       __aeabi_memset
+     63              user_uart_config_t default_config = ZS3L_USART_CONFIG_DEFAULT;
+   \       0x1A   0x4668             MOV      R0,SP
+   \       0x1C   0x....'....        LDR.W    R1,??DataTable8_1
+   \       0x20   0x2214             MOVS     R2,#+20
+   \       0x22   0x....'....        BL       __aeabi_memcpy4
+     64              memcpy(&uart_config, &default_config, sizeof(user_uart_config_t));
+   \       0x26   0x2714             MOVS     R7,#+20
+   \       0x28   0x46E8             MOV      R8,SP
+   \       0x2A   0x46B1             MOV      R9,R6
+   \       0x2C   0x003A             MOVS     R2,R7
+   \       0x2E   0x4641             MOV      R1,R8
+   \       0x30   0x4648             MOV      R0,R9
+   \       0x32   0x....'....        BL       __aeabi_memcpy
+     65              return &uart_config;
+   \       0x36   0x0030             MOVS     R0,R6
+   \       0x38   0xB005             ADD      SP,SP,#+20
+   \       0x3A   0xE8BD 0x83F0      POP      {R4-R9,PC}       ;; return
+     66          }
+
+   \                                 In section .rodata, align 4
+   \                     ?_4:
+   \        0x0   0x00 0x01          DC8 0, 1, 0, 5, 0, 6, 29, 25
+   \              0x00 0x05    
+   \              0x00 0x06    
+   \              0x1D 0x19    
+   \        0x8   0x0001'C200        DC32 115'200
+   \        0xC   0x00 0x01          DC8 0, 1, 0, 0
+   \              0x00 0x00    
+   \       0x10   0x0000'0000        DC32 0x0
+     67          
+     68          /**
+     69           * @description: device peripherals init
+     70           * @param {type} none
+     71           * @return: none
+     72           */
+
+   \                                 In section .text, align 2, keep-with-next
+     73          void per_dev_init(void)
+     74          {
+   \                     per_dev_init: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     75              ias_sensor_init();
+   \        0x2   0x....'....        BL       ias_sensor_init
+     76              gpio_output_init((gpio_config_t *)gpio_output_config, get_array_len(gpio_output_config));
+   \        0x6   0x2103             MOVS     R1,#+3
+   \        0x8   0x....'....        LDR.W    R0,??DataTable8_2
+   \        0xC   0x....'....        BL       gpio_output_init
+     77              gpio_button_init((gpio_config_t *)gpio_key_config, get_array_len(gpio_key_config), 50, keys_evt_handler); 
+   \       0x10   0x....'....        ADR.W    R3,keys_evt_handler
+   \       0x14   0x2232             MOVS     R2,#+50
+   \       0x16   0x2101             MOVS     R1,#+1
+   \       0x18   0x....'....        LDR.W    R0,??DataTable8_3
+   \       0x1C   0x....'....        BL       gpio_button_init
+     78              power_sampler_init();
+   \       0x20   0x....'....        BL       power_sampler_init
+     79              tuya_print( "per init ok....\r\n");
+   \       0x24   0x....'....        LDR.W    R1,??DataTable8_4
+   \       0x28   0x2000             MOVS     R0,#+0
+   \       0x2A   0x....'....        BL       uart_printf
+     80          }
+   \       0x2E   0xBD01             POP      {R0,PC}          ;; return
+     81          
+     82          /**
+     83           * @description: ias zone sensor init
+     84           * @param {type} none
+     85           * @return: none
+     86           */
+
+   \                                 In section .text, align 2, keep-with-next
+     87          void ias_sensor_init(void)
+     88          {
+   \                     ias_sensor_init: (+1)
+   \        0x0   0xE92D 0x47F0      PUSH     {R4-R10,LR}
+     89              ias_zone_status_bits.ias_zone_status = 0;
+   \        0x4   0x2000             MOVS     R0,#+0
+   \        0x6   0x....'....        LDR.W    R1,??DataTable8_5
+   \        0xA   0x8008             STRH     R0,[R1, #+0]
+     90              //IAS_ZONE_EP:1    IAS_ZONE_TYPE:0x15(Contact switch)
+     91              ias_zone_info_init(IAS_ZONE_EP, IAS_ZONE_TYPE);
+   \        0xC   0x2115             MOVS     R1,#+21
+   \        0xE   0x2001             MOVS     R0,#+1
+   \       0x10   0x....'....        BL       ias_zone_info_init
+     92          
+     93              //init alarm config information
+     94              memcpy(&alarm_info.sensor_io_st, &gpio_sensor_config, sizeof(gpio_config_t));
+   \       0x14   0x2405             MOVS     R4,#+5
+   \       0x16   0x....'....        LDR.W    R5,??DataTable8_6
+   \       0x1A   0x....'....        LDR.W    R6,??DataTable8_7
+   \       0x1E   0x1D37             ADDS     R7,R6,#+4
+   \       0x20   0x46B8             MOV      R8,R7
+   \       0x22   0x0022             MOVS     R2,R4
+   \       0x24   0x0029             MOVS     R1,R5
+   \       0x26   0x4640             MOV      R0,R8
+   \       0x28   0x....'....        BL       __aeabi_memcpy
+     95          
+     96              (&alarm_info)->gpio_polarity = (DEV_IO_ST_T)ALARM1_GPIO_POLARITY; 
+   \       0x2C   0x2000             MOVS     R0,#+0
+   \       0x2E   0x70F0             STRB     R0,[R6, #+3]
+     97          
+     98              (&alarm_info)->sensor_func = gpio_sensor_alarm1_interrupt_handler;
+   \       0x30   0x....'....        LDR.W    R0,??DataTable8_8
+   \       0x34   0x60F0             STR      R0,[R6, #+12]
+     99          
+    100              gpio_int_register(&((&alarm_info) -> sensor_io_st), (&alarm_info) -> sensor_func);
+   \       0x36   0x68F1             LDR      R1,[R6, #+12]
+   \       0x38   0x0038             MOVS     R0,R7
+   \       0x3A   0x....'....        BL       gpio_int_register
+    101          
+    102              (&alarm_info) -> init_status = (DEV_IO_ST_T)gpio_raw_input_read_status   \
+    103                                              ((&alarm_info) -> sensor_io_st.port, 
+    104                                               (&alarm_info) -> sensor_io_st.pin);
+   \       0x3E   0x7971             LDRB     R1,[R6, #+5]
+   \       0x40   0x7930             LDRB     R0,[R6, #+4]
+   \       0x42   0x....'....        BL       gpio_raw_input_read_status
+   \       0x46   0x7030             STRB     R0,[R6, #+0]
+    105          
+    106          
+    107              //init tamper config information
+    108              memcpy(&tamper_info.sensor_io_st, &gpio_tamper_config, sizeof(gpio_config_t));
+   \       0x48   0x2605             MOVS     R6,#+5
+   \       0x4A   0x....             LDR.N    R7,??DataTable8_9
+   \       0x4C   0x....'....        LDR.W    R8,??DataTable8_10
+   \       0x50   0xF118 0x0904      ADDS     R9,R8,#+4
+   \       0x54   0x46CA             MOV      R10,R9
+   \       0x56   0x0032             MOVS     R2,R6
+   \       0x58   0x0039             MOVS     R1,R7
+   \       0x5A   0x4650             MOV      R0,R10
+   \       0x5C   0x....'....        BL       __aeabi_memcpy
+    109          
+    110              (&tamper_info)->gpio_polarity = (DEV_IO_ST_T)TAMPER_GPIO_POLARITY; 
+   \       0x60   0x2000             MOVS     R0,#+0
+   \       0x62   0xF888 0x0003      STRB     R0,[R8, #+3]
+    111          
+    112              (&tamper_info)->sensor_func = gpio_sensor_tamper_interrupt_handler;
+   \       0x66   0x....             LDR.N    R0,??DataTable8_11
+   \       0x68   0xF8C8 0x000C      STR      R0,[R8, #+12]
+    113          
+    114              gpio_int_register(&((&tamper_info) -> sensor_io_st), (&tamper_info) -> sensor_func);
+   \       0x6C   0xF8D8 0x100C      LDR      R1,[R8, #+12]
+   \       0x70   0x4648             MOV      R0,R9
+   \       0x72   0x....'....        BL       gpio_int_register
+    115          
+    116              (&tamper_info) -> init_status = (DEV_IO_ST_T)gpio_raw_input_read_status   \
+    117                                              ((&tamper_info) -> sensor_io_st.port, 
+    118                                               (&tamper_info) -> sensor_io_st.pin);
+   \       0x76   0xF898 0x1005      LDRB     R1,[R8, #+5]
+   \       0x7A   0xF898 0x0004      LDRB     R0,[R8, #+4]
+   \       0x7E   0x....'....        BL       gpio_raw_input_read_status
+   \       0x82   0xF888 0x0000      STRB     R0,[R8, #+0]
+    119          
+    120              sensor_basic_init_io_status_updata();
+   \       0x86   0x....'....        BL       sensor_basic_init_io_status_updata
+    121          }
+   \       0x8A   0xE8BD 0x87F0      POP      {R4-R10,PC}      ;; return
+    122          
+    123          /**
+    124           * @description: sensor pin sample debounce handler
+    125           * @param {type} none
+    126           * @return: none
+    127           */
+
+   \                                 In section .text, align 2, keep-with-next
+    128          void gpio_sensor_debounce_handler(uint8_t evt)
+    129          {
+   \                     gpio_sensor_debounce_handler: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    130              if(evt == GPIO_ALARM1_DEBOUNCE_EVT_ID) {
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \        0x8   0x282A             CMP      R0,#+42
+   \        0xA   0xD128             BNE.N    ??gpio_sensor_debounce_handler_0
+    131                  dev_timer_stop(GPIO_ALARM1_DEBOUNCE_EVT_ID);
+   \        0xC   0x202A             MOVS     R0,#+42
+   \        0xE   0x....'....        BL       dev_timer_stop
+    132                  alarm_info.last_status = alarm_info.new_status;
+   \       0x12   0x....             LDR.N    R0,??DataTable8_7
+   \       0x14   0x7841             LDRB     R1,[R0, #+1]
+   \       0x16   0x7081             STRB     R1,[R0, #+2]
+    133                  if(alarm_info.new_status == (DEV_IO_ST_T)GPIO_SENSOR_INACTIVE) {
+   \       0x18   0x7840             LDRB     R0,[R0, #+1]
+   \       0x1A   0x2800             CMP      R0,#+0
+   \       0x1C   0xD106             BNE.N    ??gpio_sensor_debounce_handler_1
+    134                          ias_zone_status_bits.zone_bits.alarm1_status_bit0 = IAS_ZONE_STATUS_BIT_INACTIVE;    
+   \       0x1E   0x....             LDR.N    R1,??DataTable8_5
+   \       0x20   0x880A             LDRH     R2,[R1, #+0]
+   \       0x22   0xF64F 0x70FE      MOVW     R0,#+65534
+   \       0x26   0x4002             ANDS     R2,R0,R2
+   \       0x28   0x800A             STRH     R2,[R1, #+0]
+   \       0x2A   0xE004             B.N      ??gpio_sensor_debounce_handler_2
+    135                  } else {
+    136                      ias_zone_status_bits.zone_bits.alarm1_status_bit0 = IAS_ZONE_STATUS_BIT_ACTIVE;
+   \                     ??gpio_sensor_debounce_handler_1: (+1)
+   \       0x2C   0x....             LDR.N    R0,??DataTable8_5
+   \       0x2E   0x8801             LDRH     R1,[R0, #+0]
+   \       0x30   0xF051 0x0101      ORRS     R1,R1,#0x1
+   \       0x34   0x8001             STRH     R1,[R0, #+0]
+    137                  }
+    138          
+    139                  // alarm1 change perform
+    140                  tuya_print("ias_zone_alarm1_pre_change %d\r\n", ias_zone_status_bits.zone_bits.alarm1_status_bit0);
+   \                     ??gpio_sensor_debounce_handler_2: (+1)
+   \       0x36   0x....             LDR.N    R0,??DataTable8_5
+   \       0x38   0x7802             LDRB     R2,[R0, #+0]
+   \       0x3A   0xF012 0x0201      ANDS     R2,R2,#0x1
+   \       0x3E   0x....             LDR.N    R1,??DataTable8_12
+   \       0x40   0x2000             MOVS     R0,#+0
+   \       0x42   0x....'....        BL       uart_printf
+    141                  dev_led_stop_blink(1, DEV_IO_ON);
+   \       0x46   0x2101             MOVS     R1,#+1
+   \       0x48   0x2001             MOVS     R0,#+1
+   \       0x4A   0x....'....        BL       dev_led_stop_blink
+    142                  dev_timer_start_with_callback(LED_ALARM1_FLASH_EVT_ID, ALARM1_LED_FLASH_TIME, dev_evt_callback);
+   \       0x4E   0x....'....        ADR.W    R2,dev_evt_callback
+   \       0x52   0x21C8             MOVS     R1,#+200
+   \       0x54   0x2024             MOVS     R0,#+36
+   \       0x56   0x....'....        BL       dev_timer_start_with_callback
+    143                  ias_zone_status_update();
+   \       0x5A   0x....'....        BL       ias_zone_status_update
+    144              }
+    145              if(evt == GPIO_TAMPER_DEBOUNCE_EVT_ID) {
+   \                     ??gpio_sensor_debounce_handler_0: (+1)
+   \       0x5E   0x0020             MOVS     R0,R4
+   \       0x60   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x62   0x2829             CMP      R0,#+41
+   \       0x64   0xD129             BNE.N    ??gpio_sensor_debounce_handler_3
+    146                  dev_timer_stop(GPIO_TAMPER_DEBOUNCE_EVT_ID);
+   \       0x66   0x2029             MOVS     R0,#+41
+   \       0x68   0x....'....        BL       dev_timer_stop
+    147                  tamper_info.last_status = tamper_info.new_status;
+   \       0x6C   0x....             LDR.N    R0,??DataTable8_10
+   \       0x6E   0x7841             LDRB     R1,[R0, #+1]
+   \       0x70   0x7081             STRB     R1,[R0, #+2]
+    148                  if(tamper_info.new_status == (DEV_IO_ST_T)GPIO_SENSOR_INACTIVE) {
+   \       0x72   0x7840             LDRB     R0,[R0, #+1]
+   \       0x74   0x2800             CMP      R0,#+0
+   \       0x76   0xD106             BNE.N    ??gpio_sensor_debounce_handler_4
+    149                          ias_zone_status_bits.zone_bits.tamper_status_bit2 = IAS_ZONE_STATUS_BIT_INACTIVE;    
+   \       0x78   0x....             LDR.N    R1,??DataTable8_5
+   \       0x7A   0x880A             LDRH     R2,[R1, #+0]
+   \       0x7C   0xF64F 0x70FB      MOVW     R0,#+65531
+   \       0x80   0x4002             ANDS     R2,R0,R2
+   \       0x82   0x800A             STRH     R2,[R1, #+0]
+   \       0x84   0xE004             B.N      ??gpio_sensor_debounce_handler_5
+    150                  } else {
+    151                      ias_zone_status_bits.zone_bits.tamper_status_bit2 = IAS_ZONE_STATUS_BIT_ACTIVE;
+   \                     ??gpio_sensor_debounce_handler_4: (+1)
+   \       0x86   0x....             LDR.N    R0,??DataTable8_5
+   \       0x88   0x8801             LDRH     R1,[R0, #+0]
+   \       0x8A   0xF051 0x0104      ORRS     R1,R1,#0x4
+   \       0x8E   0x8001             STRH     R1,[R0, #+0]
+    152                  }
+    153                  // tamper change perform
+    154                  tuya_print("ias_zone_tamper_pre_change %d\r\n", ias_zone_status_bits.zone_bits.tamper_status_bit2);
+   \                     ??gpio_sensor_debounce_handler_5: (+1)
+   \       0x90   0x....             LDR.N    R0,??DataTable8_5
+   \       0x92   0x8800             LDRH     R0,[R0, #+0]
+   \       0x94   0xF3C0 0x0280      UBFX     R2,R0,#+2,#+1
+   \       0x98   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \       0x9A   0x....             LDR.N    R1,??DataTable8_13
+   \       0x9C   0x2000             MOVS     R0,#+0
+   \       0x9E   0x....'....        BL       uart_printf
+    155                  dev_led_stop_blink(2, DEV_IO_ON);
+   \       0xA2   0x2101             MOVS     R1,#+1
+   \       0xA4   0x2002             MOVS     R0,#+2
+   \       0xA6   0x....'....        BL       dev_led_stop_blink
+    156                  dev_timer_start_with_callback(LED_TAMPER_FLASH_EVT_ID, TAMPER_LED_FLASH_TIME, dev_evt_callback);
+   \       0xAA   0x....'....        ADR.W    R2,dev_evt_callback
+   \       0xAE   0x21C8             MOVS     R1,#+200
+   \       0xB0   0x2027             MOVS     R0,#+39
+   \       0xB2   0x....'....        BL       dev_timer_start_with_callback
+    157                  ias_zone_status_update();
+   \       0xB6   0x....'....        BL       ias_zone_status_update
+    158              }
+    159          }
+   \                     ??gpio_sensor_debounce_handler_3: (+1)
+   \       0xBA   0xBD10             POP      {R4,PC}          ;; return
+    160          
+    161          /**
+    162           * @description: Key event handler
+    163           * @param: {in} key_id: key id
+    164           * @param: {in} key_st: key status
+    165           * @param: {in} push_time: key push time
+    166           * @return: none
+    167           */
+
+   \                                 In section .text, align 4, keep-with-next
+    168          void keys_evt_handler(uint32_t key_id, key_st_t key_st, uint32_t push_time)
+    169          {
+   \                     keys_evt_handler: (+1)
+   \        0x0   0xB5F8             PUSH     {R3-R7,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+   \        0x4   0x000D             MOVS     R5,R1
+   \        0x6   0x0016             MOVS     R6,R2
+    170              if(g_key_lock_flg) {
+   \        0x8   0x....             LDR.N    R0,??DataTable8_14
+   \        0xA   0x7800             LDRB     R0,[R0, #+0]
+   \        0xC   0x2800             CMP      R0,#+0
+   \        0xE   0xD141             BNE.N    ??keys_evt_handler_0
+    171                  return;
+    172              }
+    173              switch(key_id) {
+   \                     ??keys_evt_handler_1: (+1)
+   \       0x10   0x2C00             CMP      R4,#+0
+   \       0x12   0xD13F             BNE.N    ??keys_evt_handler_2
+    174                  case 0: {
+    175                      if(KEY_ST_PUSH == key_st) {
+   \       0x14   0x0028             MOVS     R0,R5
+   \       0x16   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x18   0x2801             CMP      R0,#+1
+   \       0x1A   0xD114             BNE.N    ??keys_evt_handler_3
+    176                          if(push_time < RESET_TIME_MS) {
+   \       0x1C   0xF640 0x30B8      MOVW     R0,#+3000
+   \       0x20   0x4286             CMP      R6,R0
+   \       0x22   0xD209             BCS.N    ??keys_evt_handler_4
+    177                              if(dev_led_is_blink(0) == FALSE) {
+   \       0x24   0x2000             MOVS     R0,#+0
+   \       0x26   0x....'....        BL       dev_led_is_blink
+   \       0x2A   0x2800             CMP      R0,#+0
+   \       0x2C   0xD131             BNE.N    ??keys_evt_handler_5
+    178                                  dev_led_stop_blink(0, DEV_IO_ON);
+   \       0x2E   0x2101             MOVS     R1,#+1
+   \       0x30   0x2000             MOVS     R0,#+0
+   \       0x32   0x....'....        BL       dev_led_stop_blink
+   \       0x36   0xE02C             B.N      ??keys_evt_handler_5
+    179                              }     
+    180                          } else {
+    181                              dev_timer_start_with_callback(NWK_START_ASSOCIATE_EVT_ID, 0, dev_evt_callback); 
+   \                     ??keys_evt_handler_4: (+1)
+   \       0x38   0x....'....        ADR.W    R2,dev_evt_callback
+   \       0x3C   0x2100             MOVS     R1,#+0
+   \       0x3E   0x2026             MOVS     R0,#+38
+   \       0x40   0x....'....        BL       dev_timer_start_with_callback
+   \       0x44   0xE025             B.N      ??keys_evt_handler_5
+    182                          }
+    183                      } else { 
+    184                          if(push_time < RESET_TIME_MS) {
+   \                     ??keys_evt_handler_3: (+1)
+   \       0x46   0xF640 0x30B8      MOVW     R0,#+3000
+   \       0x4A   0x4286             CMP      R6,R0
+   \       0x4C   0xD21D             BCS.N    ??keys_evt_handler_6
+    185                              if(dev_led_is_blink(0) == FALSE) {
+   \       0x4E   0x2000             MOVS     R0,#+0
+   \       0x50   0x....'....        BL       dev_led_is_blink
+   \       0x54   0x2800             CMP      R0,#+0
+   \       0x56   0xD103             BNE.N    ??keys_evt_handler_7
+    186                                  dev_led_stop_blink(0, DEV_IO_OFF);
+   \       0x58   0x2100             MOVS     R1,#+0
+   \       0x5A   0x2000             MOVS     R0,#+0
+   \       0x5C   0x....'....        BL       dev_led_stop_blink
+    187                              } 
+    188                              NET_EVT_T net_status = nwk_state_get(); 
+   \                     ??keys_evt_handler_7: (+1)
+   \       0x60   0x....'....        BL       nwk_state_get
+   \       0x64   0x0007             MOVS     R7,R0
+    189                              if((NET_JOIN_OK == net_status) || (NET_REJOIN_OK == net_status) || (NET_LOST == net_status)) {
+   \       0x66   0x0038             MOVS     R0,R7
+   \       0x68   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x6A   0x2805             CMP      R0,#+5
+   \       0x6C   0xD007             BEQ.N    ??keys_evt_handler_8
+   \       0x6E   0x0038             MOVS     R0,R7
+   \       0x70   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x72   0x2807             CMP      R0,#+7
+   \       0x74   0xD003             BEQ.N    ??keys_evt_handler_8
+   \       0x76   0x0038             MOVS     R0,R7
+   \       0x78   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0x7A   0x2806             CMP      R0,#+6
+   \       0x7C   0xD109             BNE.N    ??keys_evt_handler_5
+    190                                  ias_zone_status_update();
+   \                     ??keys_evt_handler_8: (+1)
+   \       0x7E   0x....'....        BL       ias_zone_status_update
+    191                                  zig_report_battery_voltage(IAS_ZONE_EP);
+   \       0x82   0x2001             MOVS     R0,#+1
+   \       0x84   0x....'....        BL       zig_report_battery_voltage
+   \       0x88   0xE003             B.N      ??keys_evt_handler_5
+    192                              }
+    193                          } else {
+    194                              dev_zigbee_join_start(JOIN_TIME_OUT_MS);
+   \                     ??keys_evt_handler_6: (+1)
+   \       0x8A   0xF247 0x5030      MOVW     R0,#+30000
+   \       0x8E   0x....'....        BL       dev_zigbee_join_start
+    195                          }
+    196                      }
+    197                  } 
+    198                  break;
+   \                     ??keys_evt_handler_5: (+1)
+   \       0x92   0xE7FF             B.N      ??keys_evt_handler_9
+    199                  default:
+    200                  break;
+    201              }
+    202          }
+   \                     ??keys_evt_handler_2: (+1)
+   \                     ??keys_evt_handler_9: (+1)
+   \                     ??keys_evt_handler_0: (+1)
+   \       0x94   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+    203          
+    204          /**
+    205           * @description: report battery voltage
+    206           * @param {in} ep: endpoind
+    207           * @return: none
+    208           */
+
+   \                                 In section .text, align 2, keep-with-next
+    209          void zig_report_battery_voltage(uint8_t ep)
+    210          {
+   \                     zig_report_battery_voltage: (+1)
+   \        0x0   0xE92D 0x41F8      PUSH     {R3-R8,LR}
+   \        0x4   0xB09F             SUB      SP,SP,#+124
+   \        0x6   0x0004             MOVS     R4,R0
+    211              uint8_t battery_percent;
+    212              dev_zigbee_read_attribute(
+    213                          IAS_ZONE_EP,
+    214                          CLUSTER_POWER_CONFIG_CLUSTER_ID,
+    215                          ATTR_BATTERY_PERCENTAGE_REMAINING_ATTRIBUTE_ID,
+    216                          &battery_percent,
+    217                          sizeof(battery_percent)
+    218                      );
+   \        0x8   0x2001             MOVS     R0,#+1
+   \        0xA   0x9000             STR      R0,[SP, #+0]
+   \        0xC   0xAB01             ADD      R3,SP,#+4
+   \        0xE   0x2221             MOVS     R2,#+33
+   \       0x10   0x2101             MOVS     R1,#+1
+   \       0x12   0x2001             MOVS     R0,#+1
+   \       0x14   0x....'....        BL       dev_zigbee_read_attribute
+    219          
+    220              dev_send_data_t ret_data;
+    221              attr_key_value_t *ret_attr = ret_data.data.zg.attr;
+   \       0x18   0xAD07             ADD      R5,SP,#+28
+    222          
+    223              memset(&ret_data, 0, sizeof(ret_data));
+   \       0x1A   0x2674             MOVS     R6,#+116
+   \       0x1C   0x2700             MOVS     R7,#+0
+   \       0x1E   0xF10D 0x0808      ADD      R8,SP,#+8
+   \       0x22   0x003A             MOVS     R2,R7
+   \       0x24   0x0031             MOVS     R1,R6
+   \       0x26   0x4640             MOV      R0,R8
+   \       0x28   0x....'....        BL       __aeabi_memset
+    224              /* Don't care
+    225                  ret_data.delay_time
+    226                  ret_data.random_time
+    227                  ret_data.zcl_id
+    228                  ret_data.command_type
+    229                  ret_data.addr.mode
+    230              */
+    231              ret_data.command_id = CMD_REPORT_ATTRIBUTES_COMMAND_ID;
+   \       0x2C   0x200A             MOVS     R0,#+10
+   \       0x2E   0xF88D 0x000D      STRB     R0,[SP, #+13]
+    232              ret_data.direction = ZCL_DATA_DIRECTION_SERVER_TO_CLIENT;
+   \       0x32   0x2001             MOVS     R0,#+1
+   \       0x34   0xF88D 0x000F      STRB     R0,[SP, #+15]
+    233              ret_data.qos = QOS_0;
+   \       0x38   0x2000             MOVS     R0,#+0
+   \       0x3A   0xF88D 0x0010      STRB     R0,[SP, #+16]
+    234              
+    235              ret_data.addr.type.gw.src_ep = ep;
+   \       0x3E   0xF88D 0x4014      STRB     R4,[SP, #+20]
+    236              ret_data.addr.type.gw.cluster_id = CLUSTER_POWER_CONFIG_CLUSTER_ID;
+   \       0x42   0x2001             MOVS     R0,#+1
+   \       0x44   0xF8AD 0x0016      STRH     R0,[SP, #+22]
+    237              ret_attr[0].attr_id = ATTR_BATTERY_PERCENTAGE_REMAINING_ATTRIBUTE_ID;
+   \       0x48   0x2021             MOVS     R0,#+33
+   \       0x4A   0x8028             STRH     R0,[R5, #+0]
+    238              ret_attr[0].type = ATTR_INT8U_ATTRIBUTE_TYPE;
+   \       0x4C   0x2020             MOVS     R0,#+32
+   \       0x4E   0x70A8             STRB     R0,[R5, #+2]
+    239              ret_attr[0].value_size = 1;
+   \       0x50   0x2001             MOVS     R0,#+1
+   \       0x52   0x70E8             STRB     R0,[R5, #+3]
+    240              ret_attr[0].value[0] = battery_percent;
+   \       0x54   0xF89D 0x0004      LDRB     R0,[SP, #+4]
+   \       0x58   0x7128             STRB     R0,[R5, #+4]
+    241              ret_data.data.zg.attr_sum++;
+   \       0x5A   0xF89D 0x001A      LDRB     R0,[SP, #+26]
+   \       0x5E   0x1C40             ADDS     R0,R0,#+1
+   \       0x60   0xF88D 0x001A      STRB     R0,[SP, #+26]
+    242              dev_zigbee_send_data(&ret_data, NULL, 2000);
+   \       0x64   0xF44F 0x62FA      MOV      R2,#+2000
+   \       0x68   0x2100             MOVS     R1,#+0
+   \       0x6A   0xA802             ADD      R0,SP,#+8
+   \       0x6C   0x....'....        BL       dev_zigbee_send_data
+    243          }
+   \       0x70   0xB020             ADD      SP,SP,#+128
+   \       0x72   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+    244          
+    245          /**
+    246           * @description: event handler
+    247           * @param: {in} evt: event id
+    248           * @return: none
+    249           */
+
+   \                                 In section .text, align 4, keep-with-next
+    250          void dev_evt_callback(uint8_t evt)
+    251          {
+   \                     dev_evt_callback: (+1)
+   \        0x0   0xB51C             PUSH     {R2-R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    252              switch(evt) {
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \        0x8   0x2823             CMP      R0,#+35
+   \        0xA   0xD007             BEQ.N    ??dev_evt_callback_0
+   \        0xC   0xD32E             BCC.N    ??dev_evt_callback_1
+   \        0xE   0x2825             CMP      R0,#+37
+   \       0x10   0xD029             BEQ.N    ??dev_evt_callback_2
+   \       0x12   0xD30E             BCC.N    ??dev_evt_callback_3
+   \       0x14   0x2827             CMP      R0,#+39
+   \       0x16   0xD014             BEQ.N    ??dev_evt_callback_4
+   \       0x18   0xD31B             BCC.N    ??dev_evt_callback_5
+   \       0x1A   0xE027             B.N      ??dev_evt_callback_1
+    253                  case LED_POWER_UP_SYN_EVT_ID: {
+    254                      dev_led_stop_blink(0, DEV_IO_OFF);
+   \                     ??dev_evt_callback_0: (+1)
+   \       0x1C   0x2100             MOVS     R1,#+0
+   \       0x1E   0x2000             MOVS     R0,#+0
+   \       0x20   0x....'....        BL       dev_led_stop_blink
+    255                      g_key_lock_flg = FALSE;       
+   \       0x24   0x2000             MOVS     R0,#+0
+   \       0x26   0x....             LDR.N    R1,??DataTable8_14
+   \       0x28   0x7008             STRB     R0,[R1, #+0]
+    256                      dev_timer_stop(LED_POWER_UP_SYN_EVT_ID);  
+   \       0x2A   0x2023             MOVS     R0,#+35
+   \       0x2C   0x....'....        BL       dev_timer_stop
+    257                  }
+    258                  break;
+   \       0x30   0xE01C             B.N      ??dev_evt_callback_6
+    259                  case LED_ALARM1_FLASH_EVT_ID: {
+    260                      dev_led_stop_blink(1, DEV_IO_OFF);
+   \                     ??dev_evt_callback_3: (+1)
+   \       0x32   0x2100             MOVS     R1,#+0
+   \       0x34   0x2001             MOVS     R0,#+1
+   \       0x36   0x....'....        BL       dev_led_stop_blink
+    261                      dev_timer_stop(LED_ALARM1_FLASH_EVT_ID);          
+   \       0x3A   0x2024             MOVS     R0,#+36
+   \       0x3C   0x....'....        BL       dev_timer_stop
+    262                  }
+    263                  break;
+   \       0x40   0xE014             B.N      ??dev_evt_callback_6
+    264                  case LED_TAMPER_FLASH_EVT_ID: {
+    265                      dev_led_stop_blink(2, DEV_IO_OFF);
+   \                     ??dev_evt_callback_4: (+1)
+   \       0x42   0x2100             MOVS     R1,#+0
+   \       0x44   0x2002             MOVS     R0,#+2
+   \       0x46   0x....'....        BL       dev_led_stop_blink
+    266                      dev_timer_stop(LED_TAMPER_FLASH_EVT_ID);      
+   \       0x4A   0x2027             MOVS     R0,#+39
+   \       0x4C   0x....'....        BL       dev_timer_stop
+    267                  }
+    268                  break;
+   \       0x50   0xE00C             B.N      ??dev_evt_callback_6
+    269                  case NWK_START_ASSOCIATE_EVT_ID: {
+    270                      dev_led_start_blink(0, 250, 250, DEV_LED_BLINK_FOREVER, DEV_IO_OFF);        
+   \                     ??dev_evt_callback_5: (+1)
+   \       0x52   0x2000             MOVS     R0,#+0
+   \       0x54   0x9000             STR      R0,[SP, #+0]
+   \       0x56   0xF64F 0x73FF      MOVW     R3,#+65535
+   \       0x5A   0x22FA             MOVS     R2,#+250
+   \       0x5C   0x21FA             MOVS     R1,#+250
+   \       0x5E   0x2000             MOVS     R0,#+0
+   \       0x60   0x....'....        BL       dev_led_start_blink
+    271                  }
+    272                  break;
+   \       0x64   0xE002             B.N      ??dev_evt_callback_6
+    273                  case NWK_UP_EVT_ID: {
+    274                      ias_zone_status_update();
+   \                     ??dev_evt_callback_2: (+1)
+   \       0x66   0x....'....        BL       ias_zone_status_update
+    275                  }
+    276                  break;
+   \       0x6A   0xE7FF             B.N      ??dev_evt_callback_6
+    277                  default:
+    278                  break;
+    279              }
+    280          }
+   \                     ??dev_evt_callback_1: (+1)
+   \                     ??dev_evt_callback_6: (+1)
+   \       0x6C   0xBD13             POP      {R0,R1,R4,PC}    ;; return
+    281          
+    282          /**
+    283           * @description: power sampler init
+    284           * @param {type} none
+    285           * @return: none
+    286           */
+
+   \                                 In section .text, align 2, keep-with-next
+    287          void power_sampler_init(void)
+    288          {
+   \                     power_sampler_init: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+   \        0x2   0xB094             SUB      SP,SP,#+80
+    289              battery_cfg_t battery_cfg = {
+    290                  .cap_first_delay_time = 5*60*1000,
+    291                  .cap_waitting_silence_time = 5000,
+    292                  .cap_max_period_time = BATTERY_REPORT_MINUTE*60*1000,
+    293                  .cap_max_voltage = BATTERY_MAX_MILLIV,
+    294                  .cap_min_voltage = BATTERY_MIN_MILLIV,
+    295                  .adc.adc_type = ADC_TYPE_VDD,
+    296                  .adc.pos_pin = NULL,
+    297                  .adc.neg_pin = NULL
+    298              };
+   \        0x4   0xA80D             ADD      R0,SP,#+52
+   \        0x6   0x....             LDR.N    R1,??DataTable8_15
+   \        0x8   0x221C             MOVS     R2,#+28
+   \        0xA   0x....'....        BL       __aeabi_memcpy4
+    299          
+    300              battery_table_t battery_table[] = {
+    301                  BATTERY_DEFAULT_TABLE
+    302              };
+   \        0xE   0xA802             ADD      R0,SP,#+8
+   \       0x10   0x....             LDR.N    R1,??DataTable8_16
+   \       0x12   0x222C             MOVS     R2,#+44
+   \       0x14   0x....'....        BL       __aeabi_memcpy4
+    303          
+    304              battery_report_policy_t bat_policy = {
+    305                  .type = BATTERY_TYPE_DRY_BATTERY,
+    306                  .level = DEV_BUSY_LEVEL_IDLE,
+    307                  .report_no_limits_first = TRUE,
+    308                  .limits = BATTERY_REPORT_DECREASE_LIMITS_20,
+    309                  .ext_limits = 0
+    310              };
+   \       0x18   0x....             LDR.N    R0,??DataTable8_17
+   \       0x1A   0xE9D0 0x2300      LDRD     R2,R3,[R0, #+0]
+   \       0x1E   0xE9CD 0x2300      STRD     R2,R3,[SP, #+0]
+    311              
+    312              hal_battery_config(&battery_cfg, battery_table, get_array_len(battery_table));
+   \       0x22   0x220B             MOVS     R2,#+11
+   \       0x24   0xA902             ADD      R1,SP,#+8
+   \       0x26   0xA80D             ADD      R0,SP,#+52
+   \       0x28   0x....'....        BL       hal_battery_config
+    313              hal_battery_report_policy_config(&bat_policy);
+   \       0x2C   0x4668             MOV      R0,SP
+   \       0x2E   0x....'....        BL       hal_battery_report_policy_config
+    314              dev_config_power_source_type(battery_source);           // write power source type
+   \       0x32   0x2003             MOVS     R0,#+3
+   \       0x34   0x....'....        BL       dev_config_power_source_type
+    315          }
+   \       0x38   0xB015             ADD      SP,SP,#+84
+   \       0x3A   0xBD00             POP      {PC}             ;; return
+
+   \                                 In section .rodata, align 4
+   \                     ?_5:
+   \        0x0   0x0004'93E0        DC32 300'000, 5'000, 14'400'000
+   \              0x0000'1388  
+   \              0x00DB'BA00  
+   \        0xC   0x0BB8 0x0960      DC16 3'000, 2'400
+   \       0x10   0x00 0x00          DC8 0, 0, 0, 0
+   \              0x00 0x00    
+   \       0x14   0x0000'0000        DC32 0x0, 0x0
+   \              0x0000'0000  
+
+   \                                 In section .rodata, align 4
+   \                     ?_6:
+   \        0x0   0x00 0x00          DC8 0, 0, 1, 2, 0, 0, 0, 0
+   \              0x01 0x02    
+   \              0x00 0x00    
+   \              0x00 0x00    
+    316          
+    317          /**
+    318           * @description: write battery type property function
+    319           * @param {in} type: power source type
+    320           * @return: none
+    321           */
+
+   \                                 In section .text, align 2, keep-with-next
+    322          void dev_config_power_source_type(power_type_t type)
+    323          {
+   \                     dev_config_power_source_type: (+1)
+   \        0x0   0xB501             PUSH     {R0,LR}
+   \        0x2   0xB082             SUB      SP,SP,#+8
+    324              dev_zigbee_write_attribute(
+    325                      IAS_ZONE_EP,
+    326                      CLUSTER_BASIC_CLUSTER_ID,
+    327                      ATTR_POWER_SOURCE_ATTRIBUTE_ID,
+    328                      &type,
+    329                      ATTR_ENUM8_ATTRIBUTE_TYPE
+    330                  );
+   \        0x4   0x2030             MOVS     R0,#+48
+   \        0x6   0x9000             STR      R0,[SP, #+0]
+   \        0x8   0xAB02             ADD      R3,SP,#+8
+   \        0xA   0x2207             MOVS     R2,#+7
+   \        0xC   0x2100             MOVS     R1,#+0
+   \        0xE   0x2001             MOVS     R0,#+1
+   \       0x10   0x....'....        BL       dev_zigbee_write_attribute
+    331          }
+   \       0x14   0xBD07             POP      {R0-R2,PC}       ;; return
+    332          
+    333          /**
+    334           * @description: sensor init gpio set
+    335           * @param {type} none
+    336           * @return: none
+    337           */
+
+   \                                 In section .text, align 2, keep-with-next
+    338          uint8_t sensor_init_io_status_set(sensor_t *senor_info)
+    339          {
+   \                     sensor_init_io_status_set: (+1)
+   \        0x0   0x0001             MOVS     R1,R0
+    340              if (senor_info -> gpio_polarity == senor_info -> init_status) {
+   \        0x2   0x78C8             LDRB     R0,[R1, #+3]
+   \        0x4   0x780A             LDRB     R2,[R1, #+0]
+   \        0x6   0x4290             CMP      R0,R2
+   \        0x8   0xD102             BNE.N    ??sensor_init_io_status_set_0
+    341                  senor_info -> new_status = (DEV_IO_ST_T)GPIO_SENSOR_ACTIVE;
+   \        0xA   0x2001             MOVS     R0,#+1
+   \        0xC   0x7048             STRB     R0,[R1, #+1]
+   \        0xE   0xE001             B.N      ??sensor_init_io_status_set_1
+    342              } else {
+    343                  senor_info -> new_status = (DEV_IO_ST_T)GPIO_SENSOR_INACTIVE;
+   \                     ??sensor_init_io_status_set_0: (+1)
+   \       0x10   0x2000             MOVS     R0,#+0
+   \       0x12   0x7048             STRB     R0,[R1, #+1]
+    344              }
+    345              
+    346              senor_info -> last_status = senor_info -> new_status;
+   \                     ??sensor_init_io_status_set_1: (+1)
+   \       0x14   0x7848             LDRB     R0,[R1, #+1]
+   \       0x16   0x7088             STRB     R0,[R1, #+2]
+    347              return 1;
+   \       0x18   0x2001             MOVS     R0,#+1
+   \       0x1A   0x4770             BX       LR               ;; return
+    348          }
+    349          
+    350          /**
+    351           * @description: battery sampling event callback
+    352           * @param {in} data_st: args point
+    353           * @return: none
+    354           */
+
+   \                                 In section .text, align 2, keep-with-next
+    355          void battery_sampling_evt_callback(cb_args_t *data_st)
+    356          {
+   \                     battery_sampling_evt_callback: (+1)
+   \        0x0   0xB538             PUSH     {R3-R5,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    357              if(data_st -> type == CALLBACK_TYPE_CAPTURE_BATTERY) {
+   \        0x4   0x7820             LDRB     R0,[R4, #+0]
+   \        0x6   0x2801             CMP      R0,#+1
+   \        0x8   0xD113             BNE.N    ??battery_sampling_evt_callback_0
+    358                  if(data_st -> args.battery.real_percent <= 20) {
+   \        0xA   0x79E0             LDRB     R0,[R4, #+7]
+   \        0xC   0x2815             CMP      R0,#+21
+   \        0xE   0xDA08             BGE.N    ??battery_sampling_evt_callback_1
+    359                      hal_battery_capture_period_change(60 * 60 * 1000UL);
+   \       0x10   0x....             LDR.N    R5,??DataTable8_18  ;; 0x36ee80
+   \       0x12   0x0028             MOVS     R0,R5
+   \       0x14   0x....'....        BL       hal_battery_capture_period_change
+    360                      dev_heartbeat_set(BATTERY_VOLTAGE, 60 * 60 * 1000);
+   \       0x18   0x0029             MOVS     R1,R5
+   \       0x1A   0x2001             MOVS     R0,#+1
+   \       0x1C   0x....'....        BL       dev_heartbeat_set
+   \       0x20   0xE007             B.N      ??battery_sampling_evt_callback_0
+    361                  } else {
+    362                      hal_battery_capture_period_change(BATTERY_REPORT_MINUTE * 60 * 1000UL);
+   \                     ??battery_sampling_evt_callback_1: (+1)
+   \       0x22   0x....             LDR.N    R5,??DataTable8_19  ;; 0xdbba00
+   \       0x24   0x0028             MOVS     R0,R5
+   \       0x26   0x....'....        BL       hal_battery_capture_period_change
+    363                      dev_heartbeat_set(BATTERY_VOLTAGE, BATTERY_REPORT_MINUTE * 60 * 1000UL);
+   \       0x2A   0x0029             MOVS     R1,R5
+   \       0x2C   0x2001             MOVS     R0,#+1
+   \       0x2E   0x....'....        BL       dev_heartbeat_set
+    364                  }
+    365              }
+    366          }
+   \                     ??battery_sampling_evt_callback_0: (+1)
+   \       0x32   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8:
+   \        0x0   0x....'....        DC32     uart_config
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_1:
+   \        0x0   0x....'....        DC32     ?_4
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_2:
+   \        0x0   0x....'....        DC32     gpio_output_config
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_3:
+   \        0x0   0x....'....        DC32     gpio_key_config
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_4:
+   \        0x0   0x....'....        DC32     ?_0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_5:
+   \        0x0   0x....'....        DC32     ias_zone_status_bits
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_6:
+   \        0x0   0x....'....        DC32     gpio_sensor_config
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_7:
+   \        0x0   0x....'....        DC32     alarm_info
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_8:
+   \        0x0   0x....'....        DC32     gpio_sensor_alarm1_interrupt_handler
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_9:
+   \        0x0   0x....'....        DC32     gpio_tamper_config
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_10:
+   \        0x0   0x....'....        DC32     tamper_info
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_11:
+   \        0x0   0x....'....        DC32     gpio_sensor_tamper_interrupt_handler
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_12:
+   \        0x0   0x....'....        DC32     ?_1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_13:
+   \        0x0   0x....'....        DC32     ?_2
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_14:
+   \        0x0   0x....'....        DC32     g_key_lock_flg
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_15:
+   \        0x0   0x....'....        DC32     ?_5
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_16:
+   \        0x0   0x....'....        DC32     ?_3
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_17:
+   \        0x0   0x....'....        DC32     ?_6
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_18:
+   \        0x0   0x0036'EE80        DC32     0x36ee80
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_19:
+   \        0x0   0x00DB'BA00        DC32     0xdbba00
+
+   \                                 In section .rodata, align 4
+   \                     ?_0:
+   \        0x0   0x70 0x65          DC8 "per init ok....\015\012"
+   \              0x72 0x20    
+   \              0x69 0x6E    
+   \              0x69 0x74    
+   \              0x20 0x6F    
+   \              0x6B 0x2E    
+   \              0x2E 0x2E    
+   \              0x2E 0x0D    
+   \              0x0A 0x00    
+   \       0x12   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_1:
+   \        0x0   0x69 0x61          DC8 "ias_zone_alarm1_pre_change %d\015\012"
+   \              0x73 0x5F    
+   \              0x7A 0x6F    
+   \              0x6E 0x65    
+   \              0x5F 0x61    
+   \              0x6C 0x61    
+   \              0x72 0x6D    
+   \              0x31 0x5F    
+   \              0x70 0x72    
+   \              0x65 0x5F    
+   \              0x63 0x68    
+   \              0x61 0x6E    
+   \              0x67 0x65    
+   \              0x20 0x25    
+   \              0x64 0x0D    
+   \              0x0A 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     ?_2:
+   \        0x0   0x69 0x61          DC8 "ias_zone_tamper_pre_change %d\015\012"
+   \              0x73 0x5F    
+   \              0x7A 0x6F    
+   \              0x6E 0x65    
+   \              0x5F 0x74    
+   \              0x61 0x6D    
+   \              0x70 0x65    
+   \              0x72 0x5F    
+   \              0x70 0x72    
+   \              0x65 0x5F    
+   \              0x63 0x68    
+   \              0x61 0x6E    
+   \              0x67 0x65    
+   \              0x20 0x25    
+   \              0x64 0x0D    
+   \              0x0A 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     ?_3:
+   \        0x0   0x0960             DC16 2'400
+   \        0x2   0x00 0x00          DC8 0, 0
+   \        0x4   0x0A28             DC16 2'600
+   \        0x6   0x0A 0x00          DC8 10, 0
+   \        0x8   0x0AF0             DC16 2'800
+   \        0xA   0x14 0x00          DC8 20, 0
+   \        0xC   0x0B09             DC16 2'825
+   \        0xE   0x1E 0x00          DC8 30, 0
+   \       0x10   0x0B22             DC16 2'850
+   \       0x12   0x28 0x00          DC8 40, 0
+   \       0x14   0x0B3B             DC16 2'875
+   \       0x16   0x32 0x00          DC8 50, 0
+   \       0x18   0x0B54             DC16 2'900
+   \       0x1A   0x3C 0x00          DC8 60, 0
+   \       0x1C   0x0B6D             DC16 2'925
+   \       0x1E   0x46 0x00          DC8 70, 0
+   \       0x20   0x0B86             DC16 2'950
+   \       0x22   0x50 0x00          DC8 80, 0
+   \       0x24   0x0B9F             DC16 2'975
+   \       0x26   0x5A 0x00          DC8 90, 0
+   \       0x28   0x0BB8             DC16 3'000
+   \       0x2A   0x64 0x00          DC8 100, 0
+    367          
+    368          
+    369          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   battery_sampling_evt_callback
+        16   -> dev_heartbeat_set
+        16   -> hal_battery_capture_period_change
+      16   dev_config_power_source_type
+        16   -> dev_zigbee_write_attribute
+      16   dev_evt_callback
+        16   -> dev_led_start_blink
+        16   -> dev_led_stop_blink
+        16   -> dev_timer_stop
+        16   -> ias_zone_status_update
+       8   gpio_sensor_debounce_handler
+         8   -> dev_led_stop_blink
+         8   -> dev_timer_start_with_callback
+         8   -> dev_timer_stop
+         8   -> ias_zone_status_update
+         8   -> uart_printf
+      32   ias_sensor_init
+        32   -> __aeabi_memcpy
+        32   -> gpio_int_register
+        32   -> gpio_raw_input_read_status
+        32   -> ias_zone_info_init
+        32   -> sensor_basic_init_io_status_updata
+      24   keys_evt_handler
+        24   -> dev_led_is_blink
+        24   -> dev_led_stop_blink
+        24   -> dev_timer_start_with_callback
+        24   -> dev_zigbee_join_start
+        24   -> ias_zone_status_update
+        24   -> nwk_state_get
+        24   -> zig_report_battery_voltage
+      48   mf_test_uart_config
+        48   -> __aeabi_memcpy
+        48   -> __aeabi_memcpy4
+        48   -> __aeabi_memset
+       8   per_dev_init
+         8   -> gpio_button_init
+         8   -> gpio_output_init
+         8   -> ias_sensor_init
+         8   -> power_sampler_init
+         8   -> uart_printf
+      88   power_sampler_init
+        88   -> __aeabi_memcpy4
+        88   -> dev_config_power_source_type
+        88   -> hal_battery_config
+        88   -> hal_battery_report_policy_config
+       0   sensor_init_io_status_set
+       8   uart_init
+         8   -> mf_test_uart_config
+         8   -> user_uart_init
+     152   zig_report_battery_voltage
+       152   -> __aeabi_memset
+       152   -> dev_zigbee_read_attribute
+       152   -> dev_zigbee_send_data
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable8
+       4  ??DataTable8_1
+       4  ??DataTable8_10
+       4  ??DataTable8_11
+       4  ??DataTable8_12
+       4  ??DataTable8_13
+       4  ??DataTable8_14
+       4  ??DataTable8_15
+       4  ??DataTable8_16
+       4  ??DataTable8_17
+       4  ??DataTable8_18
+       4  ??DataTable8_19
+       4  ??DataTable8_2
+       4  ??DataTable8_3
+       4  ??DataTable8_4
+       4  ??DataTable8_5
+       4  ??DataTable8_6
+       4  ??DataTable8_7
+       4  ??DataTable8_8
+       4  ??DataTable8_9
+      20  ?_0
+      32  ?_1
+      32  ?_2
+      44  ?_3
+      20  ?_4
+      28  ?_5
+       8  ?_6
+      16  alarm_info
+      52  battery_sampling_evt_callback
+      22  dev_config_power_source_type
+     110  dev_evt_callback
+       1  g_key_lock_flg
+       8  gpio_key_config
+      16  gpio_output_config
+       8  gpio_sensor_config
+     188  gpio_sensor_debounce_handler
+       8  gpio_tamper_config
+     142  ias_sensor_init
+     150  keys_evt_handler
+      62  mf_test_uart_config
+      48  per_dev_init
+      60  power_sampler_init
+      28  sensor_init_io_status_set
+      16  tamper_info
+      20  uart_config
+      16  uart_init
+     118  zig_report_battery_voltage
+
+ 
+    52 bytes in section .bss
+     1 byte  in section .data
+   224 bytes in section .rodata
+ 1'076 bytes in section .text
+ 
+ 1'076 bytes of CODE  memory
+   224 bytes of CONST memory
+    53 bytes of DATA  memory
+
+Errors: none
+Warnings: none

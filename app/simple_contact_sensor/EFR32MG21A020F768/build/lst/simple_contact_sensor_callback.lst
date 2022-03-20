@@ -1,0 +1,715 @@
+﻿###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.40.1.212/W32 for ARM         24/Jan/2022  17:00:05
+# Copyright 1999-2019 IAR Systems AB.
+#
+#    Cpu mode     =  
+#    Endian       =  little
+#    Source file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\simple_contact_sensor_callback.c
+#        [UTF-8]
+#    Command line =
+#        -f C:\Users\Answer\AppData\Local\Temp\EW3285.tmp
+#        (D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\simple_contact_sensor_callback.c
+#        -lC
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst
+#        --diag_suppress Pa050 -o
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M33.no_dsp --cmse --no_path_in_file_macros
+#        --separate_cluster_for_initialized_variables -e --fpu=VFPv5_sp
+#        --dlib_config D:\IAR_FOR_ARM\arm\inc\c\DLib_Config_Normal.h -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\ -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\include\
+#        -I
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\..\..\..\common\include\
+#        -On --use_c++_inline --source_encoding utf8 --text_out utf8
+#        --utf8_text_in)
+#    Locale       =  C
+#    List file    =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\lst\simple_contact_sensor_callback.lst
+#    Object file  =
+#        D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\EFR32MG21A020F768\build\obj\simple_contact_sensor_callback.o
+#
+###############################################################################
+
+D:\tuyaOS\tuya-zigbee-sdk-mg21\app\simple_contact_sensor\src\simple_contact_sensor_callback.c
+      1          /*
+      2           * @file: simple_contact_sensor_callback.c
+      3           * @brief: 
+      4           * @author: Arien
+      5           * @date: 2021-08-31 18:00:00
+      6           * @email: Arien.ye@tuya.com
+      7           * @copyright: HANGZHOU TUYA INFORMATION TECHNOLOGY CO.,LTD
+      8           * @company: http://www.tuya.com
+      9           */
+     10          #include "stdio.h"
+     11          #include "stdlib.h"
+     12          #include "config.h"
+     13          #include "tuya_zigbee_sdk.h"
+     14          #include "app_common.h"
+     15          #include "device_register.h"
+     16          #include "ias_zone_cluster.h"
+     17          
+     18          
+     19          //APL funtion
+     20          /**
+     21           * @description: power on init
+     22           * @param {type} none
+     23           * @return: none
+     24           */
+
+   \                                 In section .text, align 2, keep-with-next
+     25          void dev_power_on_init(void)
+     26          {
+   \                     dev_power_on_init: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     27              // zigbee device network parameter config
+     28              zg_dev_init();
+   \        0x2   0x....'....        BL       zg_dev_init
+     29              disable_gw_change_power(); 
+   \        0x6   0x....'....        BL       disable_gw_change_power
+     30              mf_test_disable_beacon_test();
+   \        0xA   0x....'....        BL       mf_test_disable_beacon_test
+     31          }
+   \        0xE   0xBD01             POP      {R0,PC}          ;; return
+     32          
+     33          /**
+     34           * @description: system start on, zigbee stack is inited completely and
+     35           * manufactury test is ended, the uart and the timer is ok, user can 
+     36           * init the application event and any other application variables;
+     37           * @param {type} none
+     38           * @return: none
+     39           */
+     40          
+
+   \                                 In section .text, align 2, keep-with-next
+     41          void dev_system_on_init(void)
+     42          {
+   \                     dev_system_on_init: (+1)
+   \        0x0   0xB580             PUSH     {R7,LR}
+     43              #ifdef TUYA_DEBUG
+     44              uart_init();
+   \        0x2   0x....'....        BL       uart_init
+     45              tuya_print( "/---------------system up--------------/\r\n");
+   \        0x6   0x....             LDR.N    R1,??DataTable2
+   \        0x8   0x2000             MOVS     R0,#+0
+   \        0xA   0x....'....        BL       uart_printf
+     46              #endif
+     47          
+     48              per_dev_init();                                         // peripheral init
+   \        0xE   0x....'....        BL       per_dev_init
+     49              dev_heartbeat_set(BATTERY_VOLTAGE, 4*60*60*1000UL);     // set heart beat interval 4h 4*60*60
+   \       0x12   0x....             LDR.N    R1,??DataTable2_1  ;; 0xdbba00
+   \       0x14   0x2001             MOVS     R0,#+1
+   \       0x16   0x....'....        BL       dev_heartbeat_set
+     50              dev_led_stop_blink(0, DEV_IO_ON);
+   \       0x1A   0x2101             MOVS     R1,#+1
+   \       0x1C   0x2000             MOVS     R0,#+0
+   \       0x1E   0x....'....        BL       dev_led_stop_blink
+     51              dev_timer_start_with_callback(LED_POWER_UP_SYN_EVT_ID, POWER_UP_LED_ON_TIME, dev_evt_callback);
+   \       0x22   0x....             LDR.N    R2,??DataTable2_2
+   \       0x24   0xF640 0x31B8      MOVW     R1,#+3000
+   \       0x28   0x2023             MOVS     R0,#+35
+   \       0x2A   0x....'....        BL       dev_timer_start_with_callback
+     52          }
+   \       0x2E   0xBD01             POP      {R0,PC}          ;; return
+     53          
+     54          /**
+     55           * @description: network state changed callback, when network state is changed, 
+     56           * the stack will call this function to notify the user;
+     57           * @param {state} the new network state
+     58           * @return: none
+     59           */
+
+   \                                 In section .text, align 2, keep-with-next
+     60          void nwk_state_changed_callback(NET_EVT_T state)
+     61          {
+   \                     nwk_state_changed_callback: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+     62              switch(state) {
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \        0x8   0x2801             CMP      R0,#+1
+   \        0xA   0xD00F             BEQ.N    ??nwk_state_changed_callback_0
+   \        0xC   0xD36B             BCC.N    ??nwk_state_changed_callback_1
+   \        0xE   0x2803             CMP      R0,#+3
+   \       0x10   0xD011             BEQ.N    ??nwk_state_changed_callback_2
+   \       0x12   0xD31E             BCC.N    ??nwk_state_changed_callback_3
+   \       0x14   0x2805             CMP      R0,#+5
+   \       0x16   0xD01C             BEQ.N    ??nwk_state_changed_callback_3
+   \       0x18   0xD312             BCC.N    ??nwk_state_changed_callback_4
+   \       0x1A   0x2807             CMP      R0,#+7
+   \       0x1C   0xD036             BEQ.N    ??nwk_state_changed_callback_5
+   \       0x1E   0xD329             BCC.N    ??nwk_state_changed_callback_6
+   \       0x20   0x2809             CMP      R0,#+9
+   \       0x22   0xD04E             BEQ.N    ??nwk_state_changed_callback_7
+   \       0x24   0xD33F             BCC.N    ??nwk_state_changed_callback_8
+   \       0x26   0x280A             CMP      R0,#+10
+   \       0x28   0xD054             BEQ.N    ??nwk_state_changed_callback_9
+   \       0x2A   0xE05C             B.N      ??nwk_state_changed_callback_1
+     63                  case NET_POWER_ON_LEAVE: {
+     64                      tuya_print("NET_POWER_ON_LEAVE\r\n");  
+   \                     ??nwk_state_changed_callback_0: (+1)
+   \       0x2C   0x....             LDR.N    R1,??DataTable2_3
+   \       0x2E   0x2000             MOVS     R0,#+0
+   \       0x30   0x....'....        BL       uart_printf
+     65                  }
+     66                  break;
+   \       0x34   0xE057             B.N      ??nwk_state_changed_callback_10
+     67                  case NET_JOIN_START: {
+     68                      tuya_print("NET_JOIN_START\r\n");
+   \                     ??nwk_state_changed_callback_2: (+1)
+   \       0x36   0x....             LDR.N    R1,??DataTable2_4
+   \       0x38   0x2000             MOVS     R0,#+0
+   \       0x3A   0x....'....        BL       uart_printf
+     69                  }
+     70                  break;
+   \       0x3E   0xE052             B.N      ??nwk_state_changed_callback_10
+     71                  case NET_JOIN_TIMEOUT: {
+     72                      tuya_print("NET_JOIN_TIMEOUT\r\n");
+   \                     ??nwk_state_changed_callback_4: (+1)
+   \       0x40   0x....             LDR.N    R1,??DataTable2_5
+   \       0x42   0x2000             MOVS     R0,#+0
+   \       0x44   0x....'....        BL       uart_printf
+     73                      dev_led_stop_blink(0, DEV_IO_OFF);  
+   \       0x48   0x2100             MOVS     R1,#+0
+   \       0x4A   0x2000             MOVS     R0,#+0
+   \       0x4C   0x....'....        BL       dev_led_stop_blink
+     74                  }
+     75                  break;
+   \       0x50   0xE049             B.N      ??nwk_state_changed_callback_10
+     76                  case NET_POWER_ON_ONLINE:
+     77                  case NET_JOIN_OK: {
+     78                      tuya_print("NET_JOIN_OK\r\n");
+   \                     ??nwk_state_changed_callback_3: (+1)
+   \       0x52   0x....             LDR.N    R1,??DataTable2_6
+   \       0x54   0x2000             MOVS     R0,#+0
+   \       0x56   0x....'....        BL       uart_printf
+     79                      ias_sensor_status_sync();
+   \       0x5A   0x....'....        BL       ias_sensor_status_sync
+     80                      dev_led_stop_blink(0, DEV_IO_OFF);
+   \       0x5E   0x2100             MOVS     R1,#+0
+   \       0x60   0x2000             MOVS     R0,#+0
+   \       0x62   0x....'....        BL       dev_led_stop_blink
+     81                      dev_timer_start_with_callback(NWK_UP_EVT_ID, 3000, dev_evt_callback);
+   \       0x66   0x....             LDR.N    R2,??DataTable2_2
+   \       0x68   0xF640 0x31B8      MOVW     R1,#+3000
+   \       0x6C   0x2025             MOVS     R0,#+37
+   \       0x6E   0x....'....        BL       dev_timer_start_with_callback
+     82                  }
+     83                  break;
+   \       0x72   0xE038             B.N      ??nwk_state_changed_callback_10
+     84                  case NET_LOST: {
+     85                      tuya_print("NET_LOST\r\n");
+   \                     ??nwk_state_changed_callback_6: (+1)
+   \       0x74   0x....             LDR.N    R1,??DataTable2_7
+   \       0x76   0x2000             MOVS     R0,#+0
+   \       0x78   0x....'....        BL       uart_printf
+     86                      dev_timer_stop(NWK_UP_EVT_ID);
+   \       0x7C   0x2025             MOVS     R0,#+37
+   \       0x7E   0x....'....        BL       dev_timer_stop
+     87                      dev_led_stop_blink(0, DEV_IO_OFF);
+   \       0x82   0x2100             MOVS     R1,#+0
+   \       0x84   0x2000             MOVS     R0,#+0
+   \       0x86   0x....'....        BL       dev_led_stop_blink
+     88                  }
+     89                  break;
+   \       0x8A   0xE02C             B.N      ??nwk_state_changed_callback_10
+     90                  case NET_REJOIN_OK:{
+     91                      tuya_print("NET_REJOIN_OK\r\n");
+   \                     ??nwk_state_changed_callback_5: (+1)
+   \       0x8C   0x....             LDR.N    R1,??DataTable2_8
+   \       0x8E   0x2000             MOVS     R0,#+0
+   \       0x90   0x....'....        BL       uart_printf
+     92                      ias_sensor_status_sync();
+   \       0x94   0x....'....        BL       ias_sensor_status_sync
+     93                      dev_timer_start_with_callback(NWK_UP_EVT_ID, 2000, dev_evt_callback);
+   \       0x98   0x....             LDR.N    R2,??DataTable2_2
+   \       0x9A   0xF44F 0x61FA      MOV      R1,#+2000
+   \       0x9E   0x2025             MOVS     R0,#+37
+   \       0xA0   0x....'....        BL       dev_timer_start_with_callback
+     94                  }
+     95                  break;
+   \       0xA4   0xE01F             B.N      ??nwk_state_changed_callback_10
+     96                  case NET_REMOTE_LEAVE: {
+     97                      ias_zone_off_net_status_reset(state);
+   \                     ??nwk_state_changed_callback_8: (+1)
+   \       0xA6   0x0020             MOVS     R0,R4
+   \       0xA8   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0xAA   0x....'....        BL       ias_zone_off_net_status_reset
+     98                      tuya_print("NET_REMOTE_LEAVE\r\n");
+   \       0xAE   0x....             LDR.N    R1,??DataTable2_9
+   \       0xB0   0x2000             MOVS     R0,#+0
+   \       0xB2   0x....'....        BL       uart_printf
+     99                      dev_timer_start_with_callback(NWK_START_ASSOCIATE_EVT_ID, 0, dev_evt_callback);
+   \       0xB6   0x....             LDR.N    R2,??DataTable2_2
+   \       0xB8   0x2100             MOVS     R1,#+0
+   \       0xBA   0x2026             MOVS     R0,#+38
+   \       0xBC   0x....'....        BL       dev_timer_start_with_callback
+    100                  }
+    101                  break;
+   \       0xC0   0xE011             B.N      ??nwk_state_changed_callback_10
+    102                  case NET_LOCAL_LEAVE: {
+    103                      ias_zone_off_net_status_reset(state);
+   \                     ??nwk_state_changed_callback_7: (+1)
+   \       0xC2   0x0020             MOVS     R0,R4
+   \       0xC4   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0xC6   0x....'....        BL       ias_zone_off_net_status_reset
+    104                      tuya_print("NET_LOCAL_LEAVE\r\n");
+   \       0xCA   0x....             LDR.N    R1,??DataTable2_10
+   \       0xCC   0x2000             MOVS     R0,#+0
+   \       0xCE   0x....'....        BL       uart_printf
+    105                  }
+    106                  break;
+   \       0xD2   0xE008             B.N      ??nwk_state_changed_callback_10
+    107                  case NET_MF_TEST_LEAVE: {
+    108                      ias_zone_off_net_status_reset(state);
+   \                     ??nwk_state_changed_callback_9: (+1)
+   \       0xD4   0x0020             MOVS     R0,R4
+   \       0xD6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \       0xD8   0x....'....        BL       ias_zone_off_net_status_reset
+    109                      tuya_print("NET_LOCAL_LEAVE\r\n");
+   \       0xDC   0x....             LDR.N    R1,??DataTable2_10
+   \       0xDE   0x2000             MOVS     R0,#+0
+   \       0xE0   0x....'....        BL       uart_printf
+    110                  }
+    111                  break;
+   \       0xE4   0xE7FF             B.N      ??nwk_state_changed_callback_10
+    112                  default: 
+    113                  break;      
+    114              }
+    115          }
+   \                     ??nwk_state_changed_callback_1: (+1)
+   \                     ??nwk_state_changed_callback_10: (+1)
+   \       0xE6   0xBD10             POP      {R4,PC}          ;; return
+    116          
+    117          /**
+    118           * @description: device receive message callback
+    119           * @param {*dev_msg} received message information
+    120           * @return: ZCL_CMD_RET_T
+    121           */
+
+   \                                 In section .text, align 2, keep-with-next
+    122          ZCL_CMD_RET_T dev_msg_recv_callback(dev_msg_t *dev_msg)
+    123          {
+   \                     dev_msg_recv_callback: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    124              switch(dev_msg -> cluster) {
+   \        0x4   0x8860             LDRH     R0,[R4, #+2]
+   \        0x6   0xF5B0 0x6FA0      CMP      R0,#+1280
+   \        0xA   0xD003             BEQ.N    ??dev_msg_recv_callback_0
+   \        0xC   0xF5B0 0x4F6F      CMP      R0,#+61184
+   \       0x10   0xD104             BNE.N    ??dev_msg_recv_callback_1
+    125                  case CLUSTER_PRIVATE_TUYA_CLUSTER_ID:{
+    126                      //TODO
+    127                  }
+    128                  break;
+   \                     ??dev_msg_recv_callback_2: (+1)
+   \       0x12   0xE003             B.N      ??dev_msg_recv_callback_3
+    129                  case CLUSTER_IAS_ZONE_CLUSTER_ID:{
+    130                      ias_zone_cluster_handler(dev_msg);
+   \                     ??dev_msg_recv_callback_0: (+1)
+   \       0x14   0x0020             MOVS     R0,R4
+   \       0x16   0x....'....        BL       ias_zone_cluster_handler
+    131                  }
+    132                  break;
+   \       0x1A   0xE7FF             B.N      ??dev_msg_recv_callback_3
+    133                  default:
+    134                  break;
+    135              }
+    136              return ZCL_CMD_RET_SUCCESS;
+   \                     ??dev_msg_recv_callback_1: (+1)
+   \                     ??dev_msg_recv_callback_3: (+1)
+   \       0x1C   0x2000             MOVS     R0,#+0
+   \       0x1E   0xBD10             POP      {R4,PC}          ;; return
+    137          }
+    138          
+    139          /**
+    140           * @description: write attribute callback function
+    141           * @param {endpoint} the endpoint of the write attribute
+    142           * @param {cluster} the cluster id of the write attribute
+    143           * @param {attr_id} the attribute id  of the write attribute
+    144           * @return: none
+    145           */
+
+   \                                 In section .text, align 2, keep-with-next
+    146          void dev_msg_write_attr_callback(uint8_t endpoint, CLUSTER_ID_T cluster, uint16_t attr_id)
+    147          {
+   \                     dev_msg_write_attr_callback: (+1)
+   \        0x0   0xB570             PUSH     {R4-R6,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+   \        0x4   0x000D             MOVS     R5,R1
+   \        0x6   0x0016             MOVS     R6,R2
+    148              switch(cluster) {
+   \        0x8   0x0028             MOVS     R0,R5
+   \        0xA   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \        0xC   0xF5B0 0x6FA0      CMP      R0,#+1280
+   \       0x10   0xD104             BNE.N    ??dev_msg_write_attr_callback_0
+    149                  case CLUSTER_IAS_ZONE_CLUSTER_ID: {
+    150                      ias_zone_write_attr_handler(attr_id);
+   \       0x12   0x0030             MOVS     R0,R6
+   \       0x14   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \       0x16   0x....'....        BL       ias_zone_write_attr_handler
+    151                  }
+    152                  break;
+   \       0x1A   0xE7FF             B.N      ??dev_msg_write_attr_callback_1
+    153                  default:
+    154                  break;
+    155              }
+    156              return;
+   \                     ??dev_msg_write_attr_callback_0: (+1)
+   \                     ??dev_msg_write_attr_callback_1: (+1)
+   \       0x1C   0xBD70             POP      {R4-R6,PC}       ;; return
+    157          }
+    158          
+    159          /**
+    160           * @description: device manufactury test callback, when device is in manufactury test model,
+    161           * sdk will use this callback to notify application the test item and test command;
+    162           * @param {cmd} manufactury test type
+    163           * @param {*args} manufactury test data
+    164           * @param {arg_len} manufactury test data length
+    165           * @return: none
+    166           */
+
+   \                                 In section .text, align 2, keep-with-next
+    167          MF_TEST_RET_T dev_mf_test_callback(MF_TEST_CMD_T cmd, uint8_t *args, uint16_t arg_len)
+    168          {
+   \                     dev_mf_test_callback: (+1)
+   \        0x0   0x0003             MOVS     R3,R0
+    169              return MF_TEST_SUCCESS;
+   \        0x2   0x2000             MOVS     R0,#+0
+   \        0x4   0x4770             BX       LR               ;; return
+    170          }
+    171          
+    172          /**
+    173           * @description: device report inforamtion when first power on(if need),;
+    174           * @param {type} none
+    175           * @return: none
+    176           */
+
+   \                                 In section .text, align 2, keep-with-next
+    177          void dev_power_on_report_info(void)
+    178          {
+    179              return;
+   \                     dev_power_on_report_info: (+1)
+   \        0x0   0x4770             BX       LR               ;; return
+    180          }
+    181          
+    182          /**
+    183           * @description: device recovery to factury command handler
+    184           * @param {type} none
+    185           * @return: none
+    186           */
+
+   \                                 In section .text, align 2, keep-with-next
+    187          void dev_recovery_factory(DEV_RESET_TYPE_T type)
+    188          {
+   \                     dev_recovery_factory: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+   \        0x2   0x0004             MOVS     R4,R0
+    189              if( DEV_RESET_TYPE_TO_FACTORY_AND_LEAVE==type ) {
+   \        0x4   0x0020             MOVS     R0,R4
+   \        0x6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \        0x8   0x2801             CMP      R0,#+1
+   \        0xA   0xD102             BNE.N    ??dev_recovery_factory_0
+    190                  ias_zone_unenroll( IAS_ZONE_EP );
+   \        0xC   0x2001             MOVS     R0,#+1
+   \        0xE   0x....'....        BL       ias_zone_unenroll
+    191              }
+    192              return;
+   \                     ??dev_recovery_factory_0: (+1)
+   \       0x12   0xBD10             POP      {R4,PC}          ;; return
+    193          }
+    194          
+    195          /**
+    196           * @description: device recall scene command, recovery the scene add status
+    197           * @param {endpoint} the endpoint of scene recall command
+    198           * @param {*in_data} the data need to be handled of the device status
+    199           * @return: none
+    200           */
+
+   \                                 In section .text, align 2, keep-with-next
+    201          void dev_scene_recall_callback(uint8_t endpoint, const scene_save_data_t *in_data)
+    202          {
+    203              //TODO
+    204              return;
+   \                     dev_scene_recall_callback: (+1)
+   \        0x0   0x4770             BX       LR               ;; return
+    205          }
+    206          
+    207          /**
+    208           * @description: device scene add command, store the current status to the scene table
+    209           * @param {endpoint} the endpoint of scene add command
+    210           * param {*out_data} the data need to be store to scene table
+    211           * param {*in_out_len} the data length of the store data 
+    212           * @return: none
+    213           */
+
+   \                                 In section .text, align 2, keep-with-next
+    214          void dev_scene_add_callback(uint8_t endpoint, uint8_t *out_data, uint8_t *in_out_len)
+    215          {
+    216              //TODO
+    217              return;
+   \                     dev_scene_add_callback: (+1)
+   \        0x0   0x4770             BX       LR               ;; return
+    218          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \        0x0   0x....'....        DC32     ?_0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \        0x0   0x00DB'BA00        DC32     0xdbba00
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \        0x0   0x....'....        DC32     dev_evt_callback
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_3:
+   \        0x0   0x....'....        DC32     ?_1
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_4:
+   \        0x0   0x....'....        DC32     ?_2
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_5:
+   \        0x0   0x....'....        DC32     ?_3
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_6:
+   \        0x0   0x....'....        DC32     ?_4
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_7:
+   \        0x0   0x....'....        DC32     ?_5
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_8:
+   \        0x0   0x....'....        DC32     ?_6
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_9:
+   \        0x0   0x....'....        DC32     ?_7
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_10:
+   \        0x0   0x....'....        DC32     ?_8
+
+   \                                 In section .rodata, align 4
+   \                     ?_0:
+   \        0x0   0x2F 0x2D          DC8 "/---------------system up--------------/\015\012"
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x73 0x79    
+   \              0x73 0x74    
+   \              0x65 0x6D    
+   \              0x20 0x75    
+   \              0x70 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2F    
+   \              0x0D 0x0A    
+   \              0x00         
+   \       0x2B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_1:
+   \        0x0   0x4E 0x45          DC8 "NET_POWER_ON_LEAVE\015\012"
+   \              0x54 0x5F    
+   \              0x50 0x4F    
+   \              0x57 0x45    
+   \              0x52 0x5F    
+   \              0x4F 0x4E    
+   \              0x5F 0x4C    
+   \              0x45 0x41    
+   \              0x56 0x45    
+   \              0x0D 0x0A    
+   \              0x00         
+   \       0x15   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     ?_2:
+   \        0x0   0x4E 0x45          DC8 "NET_JOIN_START\015\012"
+   \              0x54 0x5F    
+   \              0x4A 0x4F    
+   \              0x49 0x4E    
+   \              0x5F 0x53    
+   \              0x54 0x41    
+   \              0x52 0x54    
+   \              0x0D 0x0A    
+   \              0x00         
+   \       0x11   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     ?_3:
+   \        0x0   0x4E 0x45          DC8 "NET_JOIN_TIMEOUT\015\012"
+   \              0x54 0x5F    
+   \              0x4A 0x4F    
+   \              0x49 0x4E    
+   \              0x5F 0x54    
+   \              0x49 0x4D    
+   \              0x45 0x4F    
+   \              0x55 0x54    
+   \              0x0D 0x0A    
+   \              0x00         
+   \       0x13   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_4:
+   \        0x0   0x4E 0x45          DC8 "NET_JOIN_OK\015\012"
+   \              0x54 0x5F    
+   \              0x4A 0x4F    
+   \              0x49 0x4E    
+   \              0x5F 0x4F    
+   \              0x4B 0x0D    
+   \              0x0A 0x00    
+   \        0xE   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_5:
+   \        0x0   0x4E 0x45          DC8 "NET_LOST\015\012"
+   \              0x54 0x5F    
+   \              0x4C 0x4F    
+   \              0x53 0x54    
+   \              0x0D 0x0A    
+   \              0x00         
+   \        0xB   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_6:
+   \        0x0   0x4E 0x45          DC8 "NET_REJOIN_OK\015\012"
+   \              0x54 0x5F    
+   \              0x52 0x45    
+   \              0x4A 0x4F    
+   \              0x49 0x4E    
+   \              0x5F 0x4F    
+   \              0x4B 0x0D    
+   \              0x0A 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     ?_7:
+   \        0x0   0x4E 0x45          DC8 "NET_REMOTE_LEAVE\015\012"
+   \              0x54 0x5F    
+   \              0x52 0x45    
+   \              0x4D 0x4F    
+   \              0x54 0x45    
+   \              0x5F 0x4C    
+   \              0x45 0x41    
+   \              0x56 0x45    
+   \              0x0D 0x0A    
+   \              0x00         
+   \       0x13   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     ?_8:
+   \        0x0   0x4E 0x45          DC8 "NET_LOCAL_LEAVE\015\012"
+   \              0x54 0x5F    
+   \              0x4C 0x4F    
+   \              0x43 0x41    
+   \              0x4C 0x5F    
+   \              0x4C 0x45    
+   \              0x41 0x56    
+   \              0x45 0x0D    
+   \              0x0A 0x00    
+   \       0x12   0x00 0x00          DC8 0, 0
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   dev_mf_test_callback
+       8   dev_msg_recv_callback
+         8   -> ias_zone_cluster_handler
+      16   dev_msg_write_attr_callback
+        16   -> ias_zone_write_attr_handler
+       8   dev_power_on_init
+         8   -> disable_gw_change_power
+         8   -> mf_test_disable_beacon_test
+         8   -> zg_dev_init
+       0   dev_power_on_report_info
+       8   dev_recovery_factory
+         8   -> ias_zone_unenroll
+       0   dev_scene_add_callback
+       0   dev_scene_recall_callback
+       8   dev_system_on_init
+         8   -> dev_heartbeat_set
+         8   -> dev_led_stop_blink
+         8   -> dev_timer_start_with_callback
+         8   -> per_dev_init
+         8   -> uart_init
+         8   -> uart_printf
+       8   nwk_state_changed_callback
+         8   -> dev_led_stop_blink
+         8   -> dev_timer_start_with_callback
+         8   -> dev_timer_stop
+         8   -> ias_sensor_status_sync
+         8   -> ias_zone_off_net_status_reset
+         8   -> uart_printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_10
+       4  ??DataTable2_2
+       4  ??DataTable2_3
+       4  ??DataTable2_4
+       4  ??DataTable2_5
+       4  ??DataTable2_6
+       4  ??DataTable2_7
+       4  ??DataTable2_8
+       4  ??DataTable2_9
+      44  ?_0
+      24  ?_1
+      20  ?_2
+      20  ?_3
+      16  ?_4
+      12  ?_5
+      16  ?_6
+      20  ?_7
+      20  ?_8
+       6  dev_mf_test_callback
+      32  dev_msg_recv_callback
+      30  dev_msg_write_attr_callback
+      16  dev_power_on_init
+       2  dev_power_on_report_info
+      20  dev_recovery_factory
+       2  dev_scene_add_callback
+       2  dev_scene_recall_callback
+      48  dev_system_on_init
+     232  nwk_state_changed_callback
+
+ 
+ 192 bytes in section .rodata
+ 434 bytes in section .text
+ 
+ 434 bytes of CODE  memory
+ 192 bytes of CONST memory
+
+Errors: none
+Warnings: none
